@@ -11,7 +11,7 @@ with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='yala',
-    version='1.0.0b1',
+    version='1.0.0b2',
     description='Yet Another Linter Aggregator',
     long_description=LONG_DESC,
     url='https://github.com/cemsbr/yala',
@@ -48,6 +48,9 @@ setup(
             'coverage',
             'tox'
         ],
+    },
+    package_data={
+        'yala': ['setup.cfg']
     },
     entry_points={
         'console_scripts': [
