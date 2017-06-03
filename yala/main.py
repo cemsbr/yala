@@ -9,7 +9,6 @@ from multiprocessing import Pool
 from yala.linters import (Isort, Pycodestyle, Pydocstyle, Pyflakes, Pylint,
                           RadonCC, RadonMI)
 
-logging.basicConfig(level=logging.INFO)
 LOG = logging.getLogger(__name__)
 
 
@@ -23,27 +22,30 @@ class Main:
         """Extra arguments for all linters (path to lint)."""
         self._args = None
 
-    def run(self, args):
-        """Run all linters in parallel and display sorted results."""
+    def get_results(self, args):
+        """Run linters in parallel and sort all results."""
         self._args = args
         linters = (Pylint(), Pycodestyle(), Pydocstyle(), Pyflakes(), Isort(),
                    RadonCC(), RadonMI())
         with Pool() as pool:
             linters_results = pool.map(self._parse_linter, linters)
-        print()
-        results = sorted(chain.from_iterable(linters_results))
-        if not results:
-            print(':) No issues found.')
-        else:
+        return sorted(chain.from_iterable(linters_results))
+
+    def run(self, args):
+        """Print results."""
+        results = self.get_results(args)
+        if results:
+            print()
             for result in results:
                 print(result)
             issue = 'issues' if len(results) > 1 else 'issue'
-            sys.exit(f':( {len(results)} {issue} found.')
+            sys.exit(f'\n:( {len(results)} {issue} found.')
+        else:
+            print('\n:) No issues found.')
 
     def _parse_linter(self, linter):
         """Run a linter and return its results."""
         cmd_str = ' '.join((linter.cmd, ' '.join(self._args)))
-        LOG.info('Running %s...', cmd_str)
         cmd = shlex.shlex(cmd_str, posix=True, punctuation_chars=True)
         cmd = list(cmd)
         process = subprocess.run(cmd, stdout=subprocess.PIPE)
@@ -55,5 +57,6 @@ class Main:
 
 def main():
     """Entry point for the console script."""
+    logging.basicConfig(level=logging.INFO)
     extra_args = sys.argv[1:]
     Main().run(extra_args)
