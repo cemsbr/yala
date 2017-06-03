@@ -1,6 +1,0 @@
-isort
-pycodestyle
-pydocstyle
-pyflakes
-pylint
-radon
