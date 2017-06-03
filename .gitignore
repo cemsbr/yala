@@ -7,6 +7,7 @@ dist/
 # Vim
 .*.swp
 
-# coverage
+# tests
 .coverage
+.tox/
 htmlcov/
