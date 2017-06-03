@@ -6,3 +6,7 @@ dist/
 
 # Vim
 .*.swp
+
+# coverage
+.coverage
+htmlcov/
