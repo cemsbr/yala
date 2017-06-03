@@ -7,7 +7,7 @@ Language-agnostic
 Fast
     Run linters in parallel and sort output by filename and line number.
 Up-to-date
-    The code is small and easy-to-main.
+    The code is small and easy to maintain.
 Extensible
     Just a few lines do add the linters you like.
 
