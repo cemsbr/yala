@@ -1,5 +1,8 @@
 YALA - Yet Another Linter Aggregator
 ====================================
+
+|Travis| |coveralls|
+
 YALA combines many linters to improve the quality of your code. Other projects may come to your mind, but does anyone have all the features below?
 
 Language-agnostic
@@ -17,7 +20,7 @@ For now, there are some Python linters available: isort, Pylint, Pycodestyle, Py
 
 Install
 -------
-Requires Python >= 3.4.
+Requires Python >= 3.6.
 
 .. code-block:: bash
 
@@ -49,3 +52,9 @@ Besides "radon mi", it's possible to define cli options for "isort", "pycodestyl
 Adding a linter
 ---------------
 Check the file *yala/linters.py* and feel free to ask for help.
+
+
+.. |Travis| image:: https://travis-ci.org/cemsbr/yala.svg?branch=master
+           :target: https://travis-ci.org/cemsbr/yala
+.. |coveralls| image:: https://coveralls.io/repos/github/cemsbr/yala/badge.svg?branch=master
+              :target: https://coveralls.io/github/cemsbr/yala?branch=master
