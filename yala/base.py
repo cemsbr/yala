@@ -56,11 +56,6 @@ class LinterOutput:
         if isinstance(other, type(self)):
             return self._cmp_key() < self._cmp_key(other)
 
-    def __eq__(self, other):
-        """Use ``_cmp_key`` for equality."""
-        if isinstance(other, type(self)):
-            return self._cmp_key() == self._cmp_key(other)
-
 
 class Linter(metaclass=ABCMeta):
     """Linter implementations should inherit from this class."""
@@ -79,29 +74,22 @@ class Linter(metaclass=ABCMeta):
     #: dict: yala configuration only (can be empty).
     _config = ConfigParser()
     _config.read(_CFG_FILES)
-    if _config.has_section(_CFG_SECTION):
-        _config = _config[_CFG_SECTION]
-    else:
-        _config = {}
+    _config = _config[_CFG_SECTION]
 
-    def __init__(self, cmd, name=None, cfg=None):
+    def __init__(self, cmd, name=None):
         """At least, the executable name.
 
         cmd (str): Linter executable name. For arguments, config file is
             recommended.
         name (str): Name to be displayed in the results. Defaults to ``cmd``.
-        cfg (str): Prefix used in the configuration file for this linter. The
-            default is ``cmd``
         """
         self._name = cmd if name is None else name
-        if cfg is None:
-            cfg = cmd
-        self._config = self.__get_config(cfg)
+        self._config = self.__get_config(self._name)
         self.cmd = self._get_cmd(cmd)
 
     @classmethod
-    def __get_config(cls, cfg):
-        prefix = cfg + ' '
+    def __get_config(cls, name):
+        prefix = name + ' '
         return {k[len(prefix):]: v
                 for k, v in cls._config.items()
                 if k.startswith(prefix)}
@@ -123,7 +111,7 @@ class Linter(metaclass=ABCMeta):
             iterable of Result: Linter results.
 
         """
-        pass
+        raise NotImplementedError
 
     def _get_relative_path(self, full_path):
         """Return the relative path from current path."""
@@ -135,24 +123,28 @@ class Linter(metaclass=ABCMeta):
             return full_path
         return str(rel_path)
 
-    def _parse_by_pattern(self, lines, pattern, result_fn=None):
-        """Match pattern line by line and use result_fn to return Results.
+    def _parse_by_pattern(self, lines, pattern):
+        """Match pattern line by line and return Results.
+
+        Use ``_create_output_from_match`` to convert pattern match groups to
+        Result instances.
 
         Args:
             lines (iterable): Output lines to be parsed.
             pattern: Compiled pattern to match against lines.
             result_fn (function): Receive results of one match and return a
                 Result.
+
+        Return:
+            generator: Result instances.
         """
-        if result_fn is None:
-            result_fn = self._create_output_from_match
         for line in lines:
             match = pattern.match(line)
             if match:
                 params = match.groupdict()
                 if not params:
                     params = match.groups()
-                yield result_fn(params)
+                yield self._create_output_from_match(params)
 
     def _create_output_from_match(self, match_result):
         """Create Result instance from pattern match results.

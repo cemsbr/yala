@@ -4,7 +4,7 @@ from io import StringIO
 from unittest import TestCase
 from unittest.mock import patch
 
-from yala.main import Main
+from yala.main import main
 
 
 class TestFunctional(TestCase):
@@ -13,7 +13,8 @@ class TestFunctional(TestCase):
     @classmethod
     @patch('yala.main.sys.exit')
     @patch('yala.main.sys.stdout', new_callable=StringIO)
-    def setUpClass(cls, stdout_mock, exit_mock):
+    @patch('yala.main.Pool')
+    def setUpClass(cls, pool_mock, stdout_mock, exit_mock):
         """Get yala's output to be used in tests.
 
         As coverage outputs random results with --concurrency=multiprocessing,
@@ -22,12 +23,11 @@ class TestFunctional(TestCase):
         # Ignore params of patch decorators:
         # pylint: disable=arguments-differ
         cls._exit = exit_mock
-        main = Main()
-        with patch('yala.main.Pool') as pool:
-            # Replace multiprocessing by Python threads
-            pool.return_value = ThreadPoolExecutor()
-            main.run(['tests/fake_code.py'])
-            output = stdout_mock.getvalue()
+        # Replace multiprocessing by Python threads
+        pool_mock.return_value = ThreadPoolExecutor()
+        with patch('yala.main.sys.argv', ['yala', 'tests/fake_code.py']):
+            main()
+        output = stdout_mock.getvalue()
         # Remove empty last line due to trailing '\n'
         cls._output = output.split('\n')[:-1]
 

@@ -131,7 +131,7 @@ class RadonCC(Linter):
                 continue
             match = pattern_result.match(line)
             if match:
-                # Problem found in the file stored in ``path``.
+                # Output found for the file stored in ``path``.
                 line_nr, col, msg = match.groups()
                 yield LinterOutput(self._name, path, msg, line_nr, col)
 
