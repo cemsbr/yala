@@ -45,8 +45,8 @@ setup(
     # $ pip install -e .[dev,test]
     extras_require={
         'test': [
-            'coverage',
-            'tox'
+            'coverage>=4.4.1',
+            'tox>=2.7.0'
         ],
     },
     package_data={
