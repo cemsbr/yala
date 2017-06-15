@@ -9,9 +9,23 @@ HERE = path.abspath(path.dirname(__file__))
 with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
     LONG_DESC = f.read()
 
+def read_packages(basename):
+    """Return list of packages from a file with requirements.
+
+    Remove in-line comments.
+    """
+    filename = f'requirements/{basename}.txt'
+    if not path.exists(filename):
+        return []
+    with open(filename) as lines:
+        return [line.split()[0] for line in lines
+                if not line.startswith('#')]
+
+requires = {r:read_packages(r) for r in ('install', 'test', 'dev')}
+
 setup(
     name='yala',
-    version='1.0.0b2',
+    version='1.0.0rc1',
     description='Yet Another Linter Aggregator',
     long_description=LONG_DESC,
     url='https://github.com/cemsbr/yala',
@@ -28,29 +42,18 @@ setup(
         'License :: OSI Approved :: MIT License',
 
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
     keywords='linter check quality',
     packages=['yala'],
-    install_requires=[
-        'isort>=4.2.13',
-        'pycodestyle>=2.3.1',
-        'pydocstyle>=2.0.0',
-        'pyflakes>=1.5.0',
-        'pylint>=1.7.1',
-        'radon>=2.0.1'
-    ],
+    install_requires=requires['install'],
     # $ pip install -e .[dev,test]
     extras_require={
-        'test': [
-            'coverage>=4.4.1',
-            'tox>=2.7.0'
-        ],
+        'test': requires['test'],
+        'dev': requires['dev']
     },
     package_data={
-        'yala': ['setup.cfg']
+        'yala': ['setup.cfg'],
     },
     entry_points={
         'console_scripts': [

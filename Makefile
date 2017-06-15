@@ -15,10 +15,12 @@ upload: sign
 	done
 
 pip-update:
-	@echo setup.py
-	@echo --------
-	@rg -o "        '\w+>=\d.+'" setup.py | cut -d"'" -f2 | sort
-	@echo
-	@echo Current
-	@echo -------
-	@pip freeze | grep -E "`rg -o "        '\w+>=\d.+'" setup.py | cut -d"'" -f2 | cut -f1 -d'>' | sort | xargs | sed -e 's/ /|/g' | tail -n 1`" | sed -e 's/==/>=/'
+	@echo Upgrading packages...
+	pip install -U -r requirements/install.in \
+		       -r requirements/dev.in \
+		       -r requirements/test.in
+	@echo Updating requirement files...
+	cd requirements && \
+		for req in install dev test; do \
+			pip-compile $$req.in > $$req.txt; \
+		done
