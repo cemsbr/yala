@@ -9,6 +9,7 @@ HERE = path.abspath(path.dirname(__file__))
 with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
     LONG_DESC = f.read()
 
+
 def read_packages(basename):
     """Return list of packages from a file with requirements.
 
@@ -21,7 +22,8 @@ def read_packages(basename):
         return [line.split()[0] for line in lines
                 if not line.startswith('#')]
 
-requires = {r:read_packages(r) for r in ('install', 'test', 'dev')}
+
+REQUIRES = {r: read_packages(r) for r in ('install', 'test', 'dev')}
 
 setup(
     name='yala',
@@ -46,11 +48,11 @@ setup(
     ],
     keywords='linter check quality',
     packages=['yala'],
-    install_requires=requires['install'],
+    install_requires=REQUIRES['install'],
     # $ pip install -e .[dev,test]
     extras_require={
-        'test': requires['test'],
-        'dev': requires['dev']
+        'test': REQUIRES['test'],
+        'dev': REQUIRES['dev']
     },
     package_data={
         'yala': ['setup.cfg'],
