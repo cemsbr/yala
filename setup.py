@@ -31,7 +31,7 @@ REQUIRES = {k: read_packages(filename) for k, filename in {
 
 setup(
     name='yala',
-    version='1.0.0rc1',
+    version='1.0.0rc3',
     description='Yet Another Linter Aggregator',
     long_description=LONG_DESC,
     url='https://github.com/cemsbr/yala',
