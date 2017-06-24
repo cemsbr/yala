@@ -10,12 +10,12 @@ with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
     LONG_DESC = f.read()
 
 
-def read_packages(basename):
+def read_packages(filename):
     """Return list of packages from a file with requirements.
 
     Remove in-line comments.
     """
-    filename = f'requirements/{basename}.txt'
+    filename = f'requirements/{filename}'
     if not path.exists(filename):
         return []
     with open(filename) as lines:
@@ -23,7 +23,11 @@ def read_packages(basename):
                 if not line.startswith('#')]
 
 
-REQUIRES = {r: read_packages(r) for r in ('install', 'test', 'dev')}
+REQUIRES = {k: read_packages(filename) for k, filename in {
+    'install': 'install.in',
+    'test': 'test.txt',
+    'dev': 'dev.txt'}.items()
+}
 
 setup(
     name='yala',
