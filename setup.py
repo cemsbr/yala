@@ -53,20 +53,20 @@ setup(
     keywords='linter check quality',
     packages=['yala'],
     install_requires=[
-        'isort>=4',
-        'pycodestyle>=2',
-        'pydocstyle>=2',
-        'pyflakes>=1',
-        'pylint>=1',
-        'radon>=2'
+        'isort>=4.2.15',
+        'pycodestyle>=2.3.1',
+        'pydocstyle>=2.0.0',
+        'pyflakes>=1.5.0',
+        'pylint>=1.7.2',
+        'radon>=2.0.2'
     ],
     # $ pip install -e .[dev,test]
     extras_require={
         'test': [
-            'coverage>=4',
-            'tox>=2'
+            'coverage>=4.4.1',
+            'tox>=2.7.0'
         ],
-        'dev': ['pip-tools>=1']
+        'dev': ['pip-tools>=1.9.0']
     },
     package_data={
         'yala': ['setup.cfg'],
