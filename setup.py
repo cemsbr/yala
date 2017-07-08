@@ -31,7 +31,7 @@ REQUIRES = {k: read_packages(filename) for k, filename in {
 
 setup(
     name='yala',
-    version='1.0.0rc3',
+    version='1.0.0',
     description='Yet Another Linter Aggregator',
     long_description=LONG_DESC,
     url='https://github.com/cemsbr/yala',
@@ -39,7 +39,7 @@ setup(
     author_email='cems@cemshost.com.br',
     license='MIT',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
 
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
