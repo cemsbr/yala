@@ -30,7 +30,7 @@ If you are willing to hack yala's code, run the command below in this README's f
 
 .. code-block:: bash
 
-  sudo pip3.6 install -e .
+  sudo pip3.6 install -e .[dev,test]
 
 
 Usage

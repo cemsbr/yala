@@ -23,12 +23,6 @@ def read_packages(filename):
                 if not line.startswith('#')]
 
 
-REQUIRES = {k: read_packages(filename) for k, filename in {
-    'install': 'install.in',
-    'test': 'test.txt',
-    'dev': 'dev.txt'}.items()
-}
-
 setup(
     name='yala',
     version='1.0.0',
