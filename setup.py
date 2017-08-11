@@ -9,20 +9,6 @@ HERE = path.abspath(path.dirname(__file__))
 with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
     LONG_DESC = f.read()
 
-
-def read_packages(filename):
-    """Return list of packages from a file with requirements.
-
-    Remove in-line comments.
-    """
-    filename = f'requirements/{filename}'
-    if not path.exists(filename):
-        return []
-    with open(filename) as lines:
-        return [line.split()[0] for line in lines
-                if not line.startswith('#')]
-
-
 setup(
     name='yala',
     version='1.0.0',
@@ -52,13 +38,13 @@ setup(
         'pydocstyle',
         'pyflakes',
         'pylint',
-        'radon'
+        'radon',
     ],
     # $ pip install -e .[dev,test]
     extras_require={
         'test': [
             'coverage',
-            'tox'
+            'tox',
         ],
         'dev': ['pip-tools']
     },
