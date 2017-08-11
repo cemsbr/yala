@@ -9,7 +9,7 @@ click==6.7                # via pip-tools
 colorama==0.3.9           # via radon
 first==2.0.1              # via pip-tools
 flake8-polyfill==1.0.1    # via radon
-flake8==3.3.0             # via flake8-polyfill
+flake8==3.4.1             # via flake8-polyfill
 isort==4.2.15             # via pylint, yala
 lazy-object-proxy==1.3.1  # via astroid
 mando==0.6.4              # via radon
@@ -22,5 +22,5 @@ pylint==1.7.2             # via yala
 radon==2.0.2              # via yala
 six==1.10.0               # via astroid, mando, pip-tools, pydocstyle, pylint
 snowballstemmer==1.2.1    # via pydocstyle
-wrapt==1.10.10            # via astroid
+wrapt==1.10.11            # via astroid
 yala[dev]==1.0.0
