@@ -1,6 +1,6 @@
 # Maintainer: Carlos Eduardo Moreira dos Santos <cems (at) cemshost DOT com (dot) br>
 pkgname=yala
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="Combine Python linters in a sane way"
 arch=('any')
@@ -18,9 +18,9 @@ backup=()
 options=()
 install=
 changelog=
-source=("https://pypi.python.org/packages/7d/2e/3576d68c659162e6ed0e7fcf8dbf22fe4e647ab2f2b9941c13c6f74fd2cb/$pkgname-$pkgver.tar.gz")
+source=("https://pypi.python.org/packages/96/2f/821fec29b1d1b3e0a1f599d126e15d5e0f1f1a418386173c2df9d068fe4b/$pkgname-$pkgver.tar.gz")
 noextract=()
-sha256sums=('b9297bbebd3fbf5fe878a4124853036757d8f5ed2ca91b5c0ab903a2f2fcf408')
+sha256sums=('54666b00ed8c488cc74b1f1260923f57e8a8521452c46de9df0f64103a100db8')
 
 package() {
   cd "$pkgname-$pkgver"
