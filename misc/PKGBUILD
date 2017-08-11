@@ -1,0 +1,30 @@
+# Maintainer: Carlos Eduardo Moreira dos Santos <cems (at) cemshost DOT com (dot) br>
+pkgname=yala
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Combine Python linters in a sane way"
+arch=('any')
+url="https://github.com/cemsbr/yala"
+license=('MIT')
+groups=()
+depends=('pydocstyle' 'python-pycodestyle' 'python-pyflakes' 'python-pylint'
+	 'python-radon')
+makedepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("https://pypi.python.org/packages/7d/2e/3576d68c659162e6ed0e7fcf8dbf22fe4e647ab2f2b9941c13c6f74fd2cb/$pkgname-$pkgver.tar.gz")
+noextract=()
+sha256sums=('b9297bbebd3fbf5fe878a4124853036757d8f5ed2ca91b5c0ab903a2f2fcf408')
+
+package() {
+  cd "$pkgname-$pkgver"
+  python setup.py install --root="$pkgdir/" --optimize=1
+
+  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
