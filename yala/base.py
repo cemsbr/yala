@@ -57,24 +57,64 @@ class LinterOutput:
             return self._cmp_key() < self._cmp_key(other)
 
 
-class Linter(metaclass=ABCMeta):
-    """Linter implementations should inherit from this class."""
+class Config:
+    """Deal with default and user configuration.
 
-    # Most methods are to be used by the child class only.
-    #: pylint: disable=too-few-public-methods
+    Internal use only. If you are implementing your own linter, use
+    ``self._config``.
+    """
 
-    #: list: Configuration files.
-    _CFG_FILES = (
-        Path(__file__).parent / 'setup.cfg',  # default
-        'setup.cfg'  # User's. May be absent.
-    )
+    # pylint: disable=too-few-public-methods
+
     #: str: Section of the config file.
     _CFG_SECTION = 'yala'
 
-    #: dict: yala configuration only (can be empty).
-    _config = ConfigParser()
-    _config.read(_CFG_FILES)
-    _config = _config[_CFG_SECTION]
+    def __init__(self, default_file, user_file):
+        """Concatenate default and user config from filenames.
+
+        Args:
+            default_file (pathlib.Path): Yala's default file.
+            user_file (pathlib.Path, str): User config file. May not exist.
+        """
+        default = ConfigParser()
+        default.read_file(default_file.open())
+        user = ConfigParser()
+        user.read(user_file)
+        self._config = self._merge(default, user)
+
+    def get_linter_config(self, name):
+        """Return linter options without linter name prefix."""
+        prefix = name + ' '
+        return {k[len(prefix):]: v
+                for k, v in self._config.items()
+                if k.startswith(prefix)}
+
+    @classmethod
+    def _merge(cls, default, user):
+        """Append user options to default options. Return yala section."""
+        section = cls._CFG_SECTION
+        merged = default[section]
+
+        if section not in user:
+            return merged
+
+        user = user[section]
+        for key, value in user.items():
+            if key in merged:
+                merged[key] += ' ' + value
+            else:
+                merged[key] = value
+        return merged
+
+
+class Linter(metaclass=ABCMeta):
+    """Linter implementations should inherit from this class."""
+
+    # Most methods are for child class only, not public.
+    # pylint: disable=too-few-public-methods
+
+    _config = Config(Path(__file__).parent / 'setup.cfg',  # default
+                     'setup.cfg')  # User's. May be absent.
 
     def __init__(self, cmd, name=None):
         """At least, the executable name.
@@ -84,15 +124,11 @@ class Linter(metaclass=ABCMeta):
         name (str): Name to be displayed in the results. Defaults to ``cmd``.
         """
         self._name = cmd if name is None else name
-        self._config = self.__get_config(self._name)
+        cls = self.__class__
+        # pylint: disable=protected-access
+        self._config = cls._config.get_linter_config(self._name)
+        # pylint: enable=protected-access
         self.cmd = self._get_cmd(cmd)
-
-    @classmethod
-    def __get_config(cls, name):
-        prefix = name + ' '
-        return {k[len(prefix):]: v
-                for k, v in cls._config.items()
-                if k.startswith(prefix)}
 
     def _get_cmd(self, cmd):
         """Add arguments from config and quote."""
