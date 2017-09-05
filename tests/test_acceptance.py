@@ -1,4 +1,4 @@
-"""Function tests for yala executable."""
+"""Acceptance tests for yala executable."""
 from concurrent.futures import ThreadPoolExecutor
 from io import StringIO
 from unittest import TestCase
@@ -7,8 +7,8 @@ from unittest.mock import patch
 from yala.main import main
 
 
-class TestFunctional(TestCase):
-    """Functional test."""
+class TestAcceptance(TestCase):
+    """Acceptance test."""
 
     @classmethod
     @patch('yala.main.sys.exit')
