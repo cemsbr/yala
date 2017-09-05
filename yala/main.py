@@ -46,10 +46,10 @@ class Main:
     def _parse_linter(self, linter):
         """Run a linter and return its results."""
         cmd_str = ' '.join((linter.cmd, ' '.join(self._args)))
-        cmd = shlex.shlex(cmd_str, posix=True, punctuation_chars=True)
+        cmd = shlex.split(cmd_str)
         cmd = list(cmd)
         process = subprocess.run(cmd, stdout=subprocess.PIPE)
-        LOG.info('Finished %s.', cmd_str)
+        LOG.info('Finished %s', ' '.join(cmd))
         output = process.stdout.decode('utf-8')
         lines = (line for line in output.split('\n') if line)
         return list(linter.parse(lines))
