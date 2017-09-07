@@ -11,7 +11,7 @@ with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='yala',
-    version='1.0.3',
+    version='1.1.0',
     description='Yet Another Linter Aggregator',
     long_description=LONG_DESC,
     url='https://github.com/cemsbr/yala',
