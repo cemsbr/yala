@@ -6,8 +6,8 @@ import sys
 from itertools import chain
 from multiprocessing import Pool
 
-from yala.linters import (Isort, Pycodestyle, Pydocstyle, Pyflakes, Pylint,
-                          RadonCC, RadonMI)
+from yala.linters import (Isort, Pycodestyle, Pydocstyle, Pylint, RadonCC,
+                          RadonMI)
 
 LOG = logging.getLogger(__name__)
 
@@ -25,8 +25,8 @@ class Main:
     def get_results(self, args):
         """Run linters in parallel and sort all results."""
         self._args = args
-        linters = (Pylint(), Pycodestyle(), Pydocstyle(), Pyflakes(), Isort(),
-                   RadonCC(), RadonMI())
+        linters = (Pylint(), Pycodestyle(), Pydocstyle(), Isort(), RadonCC(),
+                   RadonMI())
         with Pool() as pool:
             linters_results = pool.map(self._parse_linter, linters)
         return sorted(chain.from_iterable(linters_results))
