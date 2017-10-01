@@ -14,13 +14,13 @@ isort==4.2.15             # via pylint, yala
 lazy-object-proxy==1.3.1  # via astroid
 mando==0.6.4              # via radon
 mccabe==0.6.1             # via flake8, pylint
-pip-tools==1.9.0          # via yala
+pip-tools==1.10.1         # via yala
 pycodestyle==2.3.1        # via flake8, yala
 pydocstyle==2.0.0         # via yala
-pyflakes==1.5.0           # via flake8, yala
-pylint==1.7.2             # via yala
-radon==2.0.3              # via yala
-six==1.10.0               # via astroid, mando, pip-tools, pydocstyle, pylint
+pyflakes==1.5.0           # via flake8
+pylint==1.7.4             # via yala
+radon==2.1.1              # via yala
+six==1.11.0               # via astroid, mando, pip-tools, pydocstyle, pylint
 snowballstemmer==1.2.1    # via pydocstyle
 wrapt==1.10.11            # via astroid
-yala[dev]==1.1.0
+yala[dev]==1.1.1

@@ -15,8 +15,8 @@ mccabe==0.6.1             # via flake8, pylint
 pycodestyle==2.3.1
 pydocstyle==2.0.0
 pyflakes==1.5.0           # via flake8
-pylint==1.7.2
-radon==2.0.3
-six==1.10.0               # via astroid, mando, pydocstyle, pylint
+pylint==1.7.4
+radon==2.1.1
+six==1.11.0               # via astroid, mando, pydocstyle, pylint
 snowballstemmer==1.2.1    # via pydocstyle
 wrapt==1.10.11            # via astroid
