@@ -6,6 +6,7 @@
 #
 astroid==1.5.3            # via pylint
 colorama==0.3.9           # via radon
+docopt==0.6.2
 flake8-polyfill==1.0.1    # via radon
 flake8==3.4.1             # via flake8-polyfill
 isort==4.2.15

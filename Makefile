@@ -11,4 +11,3 @@ pip-update:
 	@echo Upgrading packages...
 	pip-compile --upgrade --output-file requirements/run.txt
 	pip-compile --upgrade --output-file requirements/dev.txt requirements/dev.in
-	pip-compile --upgrade --output-file requirements/test.txt requirements/test.in

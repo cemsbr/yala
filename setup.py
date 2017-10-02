@@ -11,7 +11,7 @@ with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='yala',
-    version='1.1.1',
+    version='1.2.0',
     description='Yet Another Linter Aggregator',
     long_description=LONG_DESC,
     url='https://github.com/cemsbr/yala',
@@ -33,6 +33,7 @@ setup(
     keywords='linter check quality',
     packages=['yala'],
     install_requires=[
+        'docopt',
         'isort',
         'pycodestyle',
         'pydocstyle',
@@ -41,11 +42,11 @@ setup(
     ],
     # $ pip install -e .[dev,test]
     extras_require={
-        'test': [
+        'dev': [
             'coverage',
+            'pip-tools',
             'tox',
-        ],
-        'dev': ['pip-tools']
+        ]
     },
     package_data={
         'yala': ['setup.cfg'],

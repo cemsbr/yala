@@ -1,10 +1,23 @@
-"""Run linters, process output and display results."""
+"""Run linters on files and directories and sort results.
+
+Usage:
+  yala <path>...
+  yala -h | --help
+  yala --version
+
+Options:
+  -h --help  Show this help.
+  --version  Show yala and linters' versions.
+
+"""
 import logging
 import shlex
 import subprocess
 import sys
 from itertools import chain
 from multiprocessing import Pool
+
+from docopt import docopt
 
 from yala.linters import (Isort, Pycodestyle, Pydocstyle, Pylint, RadonCC,
                           RadonMI)
@@ -58,5 +71,5 @@ class Main:
 def main():
     """Entry point for the console script."""
     logging.basicConfig(level=logging.INFO)
-    extra_args = sys.argv[1:]
-    Main().run(extra_args)
+    args = docopt(__doc__, version='1.2.0')
+    Main().run(args['<path>'])
