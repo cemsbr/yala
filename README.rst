@@ -5,16 +5,16 @@ YALA - Yet Another Linter Aggregator
 
 YALA combines many linters to improve the quality of your code. Other projects may come to your mind, but does anyone have all the features below?
 
-Always up-to-date
-    The code is small and easy to maintain.
+Works with latest linters
+    Yala uses linters' outputs and doesn't depend on their code.
 Same defaults
-    Don't change linters' default configuration.
+    No changes to linters' default configuration.
 Easy to configure
-    Set any command-line option in one INI file: setup.cfg.
+    Set any command-line option for any linter (even pylint!) in one INI file: setup.cfg.
 Language-agnostic
     Add any linter to any language.
 Extensible
-    Just a few lines do add the linters you like.
+    Just a few lines do add your preferred linter.
 Fast
     Run linters in parallel and sort output by filename and line number.
 
@@ -52,7 +52,7 @@ You can configure the linters as explained in their docs (e.g. *isort* section i
   radon mi args = --min C
   pylint args = --disable=TODO
 
-Besides "radon mi", it's possible to define cli options for "isort", "pycodestyle", "pydocstyle", "pyflakes", "pylint" and "radon cc"(the names are exactly as they are called in command line). Of course, you can still use other means provided by each linter (e.g. "isort" section).
+Besides "radon mi", it's possible to define cli options for "isort", "pycodestyle", "pydocstyle", "pyflakes", "pylint" and "radon cc" (the names are exactly as they are called in command line). Of course, you can still use other means provided by each linter (e.g. "isort" section).
 
 Adding a linter
 ---------------
