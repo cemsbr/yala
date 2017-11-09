@@ -21,9 +21,8 @@ from multiprocessing import Pool
 
 from docopt import docopt
 
-from yala.base import Config
-from yala.linters import (Isort, Pycodestyle, Pydocstyle, Pylint, RadonCC,
-                          RadonMI)
+from .base import Config
+from .linters import Isort, Pycodestyle, Pydocstyle, Pylint, RadonCC, RadonMI
 
 LOG = logging.getLogger(__name__)
 

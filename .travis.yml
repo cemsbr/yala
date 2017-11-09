@@ -1,4 +1,4 @@
 language: python
 python: "3.6"
 install: "pip install -r requirements/dev.txt"
-script: "tox yala tests/__init__.py tests/test_*.py"
+script: "tox yala tests/__init__.py tests/test_*.py setup.py"
