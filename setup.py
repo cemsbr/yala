@@ -49,7 +49,7 @@ setup(
         ]
     },
     package_data={
-        'yala': ['setup.cfg'],
+        'yala': ['setup.cfg', 'logging.ini'],
     },
     entry_points={
         'console_scripts': [
