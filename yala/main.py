@@ -2,12 +2,14 @@
 
 Usage:
   yala <path>...
-  yala -h | --help
+  yala --dump-config
   yala --version
+  yala -h | --help
 
 Options:
-  -h --help  Show this help.
+  --dump-config  Show all detected configurations
   --version  Show yala and linters' versions.
+  -h --help  Show this help.
 
 """
 import logging
@@ -19,6 +21,7 @@ from multiprocessing import Pool
 
 from docopt import docopt
 
+from yala.base import Config
 from yala.linters import (Isort, Pycodestyle, Pydocstyle, Pylint, RadonCC,
                           RadonMI)
 
@@ -33,11 +36,11 @@ class Main:
 
     def __init__(self):
         """Extra arguments for all linters (path to lint)."""
-        self._args = None
+        self._targets = []
 
-    def get_results(self, args):
+    def lint(self, *targets):
         """Run linters in parallel and sort all results."""
-        self._args = args
+        self._targets = targets
         linters = (Pylint(), Pycodestyle(), Pydocstyle(), Isort(), RadonCC(),
                    RadonMI())
         with Pool() as pool:
@@ -46,19 +49,40 @@ class Main:
 
     def run(self, args):
         """Print results."""
-        results = self.get_results(args)
+        if args['--dump-config']:
+            self.dump_config()
+        else:
+            results = self.lint(*args['<path>'])
+            self.print_results(results)
+
+    @staticmethod
+    def dump_config():
+        """Print all yala configurations, including default and user's."""
+        if LOG.isEnabledFor(logging.INFO):
+            print()  # blank line separator if log info is enabled
+            # disable logging filenames again
+            logger = logging.getLogger(Config.__module__)
+            logger.setLevel(logging.NOTSET)
+            logger.propagate = False
+        for key, value in Config().config.items():
+            print(f'{key}: {value}')
+
+    @staticmethod
+    def print_results(results):
+        """Print linter results and exits with an error if there's any."""
+        if LOG.isEnabledFor(logging.INFO):
+            print()  # blank line separator if log info is enabled
         if results:
-            print()
             for result in results:
                 print(result)
             issue = 'issues' if len(results) > 1 else 'issue'
             sys.exit(f'\n:( {len(results)} {issue} found.')
         else:
-            print('\n:) No issues found.')
+            print(':) No issues found.')
 
     def _parse_linter(self, linter):
         """Run a linter and return its results."""
-        cmd_str = ' '.join((linter.cmd, ' '.join(self._args)))
+        cmd_str = ' '.join((linter.cmd, ' '.join(self._targets)))
         cmd = shlex.split(cmd_str)
         cmd = list(cmd)
         process = subprocess.run(cmd, stdout=subprocess.PIPE)
@@ -70,6 +94,5 @@ class Main:
 
 def main():
     """Entry point for the console script."""
-    logging.basicConfig(level=logging.INFO)
     args = docopt(__doc__, version='1.2.0')
-    Main().run(args['<path>'])
+    Main().run(args)

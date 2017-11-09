@@ -66,27 +66,48 @@ class Config:
 
     # pylint: disable=too-few-public-methods
 
+    _CFG_FILE = 'setup.cfg'
     #: str: Section of the config file.
     _CFG_SECTION = 'yala'
 
-    def __init__(self, default_file, user_file):
+    def __init__(self):
         """Concatenate default and user config from filenames.
 
         Args:
             default_file (pathlib.Path): Yala's default file.
             user_file (pathlib.Path, str): User config file. May not exist.
         """
-        default = ConfigParser()
-        default.read_file(default_file.open())
-        user = ConfigParser()
-        user.read(user_file)
-        self._config = self._merge(default, user)
+        default_cfg = self._read_default_file()
+        user_cfg = self._read_user_files()
+        self.config = self._merge(default_cfg, user_cfg)
+
+    @classmethod
+    def _read_default_file(cls):
+        yala_dir = Path(__file__).parent
+        default_file = yala_dir / cls._CFG_FILE
+        config = ConfigParser()
+        config.read(default_file)
+        return config
+
+    @classmethod
+    def _read_user_files(cls):
+        work_dir = Path.cwd()
+        user_files = [work_dir / cls._CFG_FILE]
+        # From current dir's file to root's file
+        user_files += [parent / cls._CFG_FILE for parent in work_dir.parents]
+        user_cfg = ConfigParser()
+        # Reverse order so parent folder's file is overridden.
+        for user_file in reversed(user_files):
+            if user_file.is_file():
+                LOG.info('Reading %s', user_file)
+                user_cfg.read(user_files)
+        return user_cfg
 
     def get_linter_config(self, name):
         """Return linter options without linter name prefix."""
         prefix = name + ' '
         return {k[len(prefix):]: v
-                for k, v in self._config.items()
+                for k, v in self.config.items()
                 if k.startswith(prefix)}
 
     @classmethod
@@ -113,8 +134,7 @@ class Linter(metaclass=ABCMeta):
     # Most methods are for child class only, not public.
     # pylint: disable=too-few-public-methods
 
-    _config = Config(Path(__file__).parent / 'setup.cfg',  # default
-                     'setup.cfg')  # User's. May be absent.
+    _config = Config()
 
     def __init__(self, cmd, name=None):
         """At least, the executable name.
@@ -124,7 +144,7 @@ class Linter(metaclass=ABCMeta):
         name (str): Name to be displayed in the results. Defaults to ``cmd``.
         """
         self._name = cmd if name is None else name
-        cls = self.__class__
+        cls = type(self)
         # pylint: disable=protected-access
         self._config = cls._config.get_linter_config(self._name)
         # pylint: enable=protected-access

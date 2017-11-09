@@ -23,6 +23,6 @@ class TestConfig(TestCase):
         user.read = Mock()
 
         with patch('yala.base.ConfigParser', side_effect=(default, user)):
-            config = Config(Mock(), 'user_cfg_filename')
+            config = Config()
             linter_cfg = config.get_linter_config('lint')
             self.assertEqual(expected, linter_cfg['args'])
