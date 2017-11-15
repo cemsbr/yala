@@ -4,8 +4,8 @@ help:
 clean:
 	rm -rf .eggs/ .tox/ build/ dist/ yala.egg-info/
 
-upload:
-	python setup.py sdist bdist_wheel upload -s
+upload: clean
+	python setup.py clean sdist bdist_wheel upload -s
 
 pip-update:
 	@echo Upgrading packages...
