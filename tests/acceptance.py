@@ -25,7 +25,7 @@ class TestAcceptance(TestCase):
         cls._exit = exit_mock
         # Replace multiprocessing by Python threads
         pool_mock.return_value = ThreadPoolExecutor()
-        with patch('yala.main.sys.argv', ['yala', 'tests/fake_code.py']):
+        with patch('yala.main.sys.argv', ['yala', 'tests_data/fake_code.py']):
             main()
         output = stdout_mock.getvalue()
         # Remove empty last line due to trailing '\n'
@@ -37,7 +37,7 @@ class TestAcceptance(TestCase):
             self._assert_result(line, linter_name)
 
     def _assert_result(self, line, linter_name):
-        full_line = f'tests/fake_code.py|{line} [{linter_name}]'
+        full_line = f'tests_data/fake_code.py|{line} [{linter_name}]'
         self.assertIn(full_line, self._output)
 
     def test_exit_error(self):
