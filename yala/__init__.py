@@ -2,5 +2,5 @@
 from pathlib import Path
 import logging.config
 
-logging.config.fileConfig(Path(__file__).parent / 'logging.ini',
-                          disable_existing_loggers=False)
+CONFIG_PATH = Path(__file__).parent / 'logging.ini'
+logging.config.fileConfig(str(CONFIG_PATH), disable_existing_loggers=False)
