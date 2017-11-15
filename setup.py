@@ -56,4 +56,5 @@ setup(
             'yala=yala.main:main',
         ],
     },
+    test_suite='tests',
 )
