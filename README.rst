@@ -1,7 +1,7 @@
 YALA - Yet Another Linter Aggregator
 ====================================
 
-|Travis| |coveralls|
+|Travis| |codacy| |coveralls| |codeclimate| |issue_time|
 
 YALA combines many linters to improve the quality of your code. Other projects may come to your mind, but does anyone have all the features below?
 
@@ -63,3 +63,10 @@ Check the file *yala/linters.py* and feel free to ask for help.
            :target: https://travis-ci.org/cemsbr/yala
 .. |coveralls| image:: https://coveralls.io/repos/github/cemsbr/yala/badge.svg?branch=master
               :target: https://coveralls.io/github/cemsbr/yala?branch=master
+.. |codeclimate| image:: https://api.codeclimate.com/v1/badges/26b718c43a08555bf9c8/maintainability
+                :target: https://codeclimate.com/github/cemsbr/yala/maintainability
+                   :alt: Maintainability
+.. |codacy| image:: https://api.codacy.com/project/badge/Grade/e435a65c5dd44ecf9369010b29616bd0
+           :target: https://www.codacy.com/app/cems/yala?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cemsbr/yala&amp;utm_campaign=Badge_Grade
+.. |issue_time| image:: http://isitmaintained.com/badge/resolution/cemsbr/yala.svg
+               :target: http://isitmaintained.com/project/cemsbr/yala

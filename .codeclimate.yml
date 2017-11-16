@@ -11,6 +11,6 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "**.py"
+  - "yala/**.py"
 exclude_paths:
 - tests_data/
