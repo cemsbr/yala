@@ -13,7 +13,7 @@ class Isort(Linter):
     """Isort parser."""
 
     def __init__(self):
-        """Define command."""
+        """Run "isort"."""
         super().__init__('isort')
 
     def parse(self, lines):
@@ -36,7 +36,7 @@ class Pycodestyle(Linter):
     """Pycodestyle parser."""
 
     def __init__(self):
-        """Define command."""
+        """Run "pycodestyle"."""
         super().__init__('pycodestyle')
 
     def parse(self, lines):
@@ -53,7 +53,7 @@ class Pydocstyle(Linter):
     """Pydocstyle parser."""
 
     def __init__(self):
-        """Define command."""
+        """Run "pydocstyle"."""
         super().__init__('pydocstyle')
 
     def parse(self, lines):
@@ -77,7 +77,7 @@ class Pyflakes(Linter):
     """Pyflakes parser."""
 
     def __init__(self):
-        """Define command."""
+        """Run "pyflakes"."""
         super().__init__('pyflakes')
 
     def parse(self, lines):
@@ -93,7 +93,7 @@ class Pylint(Linter):
     """Pylint parser."""
 
     def __init__(self):
-        """Define command."""
+        """Run "pylint"."""
         super().__init__('pylint')
 
     def parse(self, lines):
@@ -109,7 +109,7 @@ class RadonCC(Linter):
     """Parser for radon ciclomatic complexity."""
 
     def __init__(self):
-        """Define command."""
+        """Run "radon cc"."""
         super().__init__('radon cc')
 
     def parse(self, lines):
@@ -140,7 +140,7 @@ class RadonMI(Linter):
     """Parser for radon maintainability index."""
 
     def __init__(self):
-        """Define command."""
+        """Run "radom mi"."""
         super().__init__('radon mi')
 
     def parse(self, lines):
