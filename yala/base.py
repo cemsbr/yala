@@ -86,7 +86,7 @@ class Config:
         yala_dir = Path(__file__).parent
         default_file = yala_dir / cls._CFG_FILE
         config = ConfigParser()
-        config.read(default_file)
+        config.read(str(default_file))
         return config
 
     @classmethod
@@ -100,7 +100,7 @@ class Config:
         for user_file in reversed(user_files):
             if user_file.is_file():
                 LOG.info('Reading %s', user_file)
-                user_cfg.read(user_files)
+                user_cfg.read(str(user_files))
         return user_cfg
 
     def get_linter_config(self, name):
