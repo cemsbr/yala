@@ -1,12 +1,12 @@
 YALA - Yet Another Linter Aggregator
 ====================================
 
-|Travis| |codacy| |coveralls| |codeclimate| |issue_time|
+|build| |coveralls| |codecov| |codacy| |codeclimate| |sonarcloud| |issue_time|
 
 YALA combines many linters to improve the quality of your code. Other projects may come to your mind, but does anyone have all the features below?
 
 Works with latest linters
-    Yala uses linters' outputs and doesn't depend on their code.
+    Yala uses linters' outputs and doesn't break on API changes.
 Same defaults
     No changes to linters' default configuration.
 Easy to configure
@@ -59,13 +59,25 @@ Adding a linter
 Check the file *yala/linters.py* and feel free to ask for help.
 
 
-.. |Travis| image:: https://travis-ci.org/cemsbr/yala.svg?branch=master
-           :target: https://travis-ci.org/cemsbr/yala
+.. |build| image:: https://semaphoreci.com/api/v1/cemsbr/yala/branches/ci/shields_badge.svg
+          :target: https://semaphoreci.com/cemsbr/yala
+
 .. |coveralls| image:: https://coveralls.io/repos/github/cemsbr/yala/badge.svg?branch=master
               :target: https://coveralls.io/github/cemsbr/yala?branch=master
-.. |codeclimate| image:: https://api.codeclimate.com/v1/badges/26b718c43a08555bf9c8/maintainability
-                :target: https://codeclimate.com/github/cemsbr/yala/maintainability
+
+.. |codecov| image:: https://codecov.io/gh/cemsbr/yala/branch/master/graph/badge.svg
+            :target: https://codecov.io/gh/cemsbr/yala
+               :alt: Codecov badge
+
 .. |codacy| image:: https://api.codacy.com/project/badge/Grade/e435a65c5dd44ecf9369010b29616bd0
            :target: https://www.codacy.com/app/cems/yala?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cemsbr/yala&amp;utm_campaign=Badge_Grade
+
+.. |codeclimate| image:: https://api.codeclimate.com/v1/badges/26b718c43a08555bf9c8/maintainability
+                :target: https://codeclimate.com/github/cemsbr/yala/maintainability
+
+.. |sonarcloud| image:: https://sonarcloud.io/api/badges/gate?key=github-com-cemsbr-yala
+               :target: https://sonarcloud.io/dashboard?id=github-com-cemsbr-yala
+                  :alt: Sonarcloud badge
+
 .. |issue_time| image:: http://isitmaintained.com/badge/resolution/cemsbr/yala.svg
                :target: http://isitmaintained.com/project/cemsbr/yala

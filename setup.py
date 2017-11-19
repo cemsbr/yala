@@ -43,8 +43,14 @@ setup(
     # $ pip install -e .[dev,test]
     extras_require={
         'dev': [
-            'coverage',
+            # https://bitbucket.org/ned/coveragepy/issues/578/
+            # incomplete-file-path-in-xml-report
+            'bandit',
+            'coverage<4.4',
+            'eradicate',
             'pip-tools',
+            'rstcheck',
+            'safety',
             'tox',
         ]
     },
