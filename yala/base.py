@@ -100,7 +100,7 @@ class Config:
         for user_file in reversed(user_files):
             if user_file.is_file():
                 LOG.info('Reading %s', user_file)
-                user_cfg.read(str(user_files))
+                user_cfg.read(str(user_file))
         return user_cfg
 
     def get_linter_config(self, name):

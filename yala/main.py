@@ -93,5 +93,5 @@ class Main:
 
 def main():
     """Entry point for the console script."""
-    args = docopt(__doc__, version='1.3.2')
+    args = docopt(__doc__, version='1.3.3')
     Main().run(args)
