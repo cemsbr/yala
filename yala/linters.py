@@ -12,9 +12,7 @@ __all__ = ('Isort', 'Pycodestyle', 'Pydocstyle', 'Pyflakes', 'Pylint',
 class Isort(Linter):
     """Isort parser."""
 
-    def __init__(self):
-        """Run "isort"."""
-        super().__init__('isort')
+    name = 'isort'
 
     def parse(self, lines):
         """Get full path and message from each output line."""
@@ -29,15 +27,13 @@ class Isort(Linter):
         """As isort outputs full path, we change it to relative path."""
         full_path = match_result['full_path']
         path = self._get_relative_path(full_path)
-        return LinterOutput(self._name, path, match_result['msg'])
+        return LinterOutput(self.name, path, match_result['msg'])
 
 
 class Pycodestyle(Linter):
     """Pycodestyle parser."""
 
-    def __init__(self):
-        """Run "pycodestyle"."""
-        super().__init__('pycodestyle')
+    name = 'pycodestyle'
 
     def parse(self, lines):
         """Get :class:`base.Result` parameters using regex."""
@@ -52,9 +48,7 @@ class Pycodestyle(Linter):
 class Pydocstyle(Linter):
     """Pydocstyle parser."""
 
-    def __init__(self):
-        """Run "pydocstyle"."""
-        super().__init__('pydocstyle')
+    name = 'pydocstyle'
 
     def parse(self, lines):
         """Get :class:`base.Result` parameters using regex.
@@ -70,15 +64,13 @@ class Pydocstyle(Linter):
                 path, line_nr = patterns[0].match(line).groups()
             else:
                 msg = patterns[1].match(line).group(1)
-                yield LinterOutput(self._name, path, msg, line_nr)
+                yield LinterOutput(self.name, path, msg, line_nr)
 
 
 class Pyflakes(Linter):
     """Pyflakes parser."""
 
-    def __init__(self):
-        """Run "pyflakes"."""
-        super().__init__('pyflakes')
+    name = 'pyflakes'
 
     def parse(self, lines):
         """Get :class:`base.Result` parameters using regex."""
@@ -92,9 +84,7 @@ class Pyflakes(Linter):
 class Pylint(Linter):
     """Pylint parser."""
 
-    def __init__(self):
-        """Run "pylint"."""
-        super().__init__('pylint')
+    name = 'pylint'
 
     def parse(self, lines):
         """Get :class:`base.Result` parameters using regex."""
@@ -108,9 +98,7 @@ class Pylint(Linter):
 class RadonCC(Linter):
     """Parser for radon ciclomatic complexity."""
 
-    def __init__(self):
-        """Run "radon cc"."""
-        super().__init__('radon cc')
+    name = 'radon cc'
 
     def parse(self, lines):
         """Get :class:`base.Result` parameters using regex.
@@ -133,15 +121,13 @@ class RadonCC(Linter):
             if match:
                 # Output found for the file stored in ``path``.
                 line_nr, col, msg = match.groups()
-                yield LinterOutput(self._name, path, msg, line_nr, col)
+                yield LinterOutput(self.name, path, msg, line_nr, col)
 
 
 class RadonMI(Linter):
     """Parser for radon maintainability index."""
 
-    def __init__(self):
-        """Run "radom mi"."""
-        super().__init__('radon mi')
+    name = 'radon mi'
 
     def parse(self, lines):
         """Get :class:`base.Result` parameters using regex."""

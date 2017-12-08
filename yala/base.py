@@ -67,17 +67,24 @@ class Linter(metaclass=ABCMeta):
 
     _config = Config()
 
-    def __init__(self, cmd, name=None):
+    @property
+    @classmethod
+    @abstractmethod
+    def name(cls):
+        """Name of this linter. Recommended to be the same as its command."""
+        pass
+
+    def __init__(self, cmd=None):
         """At least, the executable name.
 
-        cmd (str): Linter executable name. For arguments, config file is
-            recommended.
-        name (str): Name to be displayed in the results. Defaults to ``cmd``.
+        cmd (str): Command to be executed. Default is :attr:`name`. For
+            arguments, configuring setup.cfg is recommended.
         """
-        self._name = cmd if name is None else name
+        if cmd is None:
+            cmd = self.name
         cls = type(self)
         # pylint: disable=protected-access
-        self._config = cls._config.get_linter_config(self._name)
+        self._config = cls._config.get_linter_config(cls.name)
         # pylint: enable=protected-access
         self.cmd = self._get_cmd(cmd)
 
@@ -106,7 +113,7 @@ class Linter(metaclass=ABCMeta):
             rel_path = Path(full_path).relative_to(Path().absolute())
         except ValueError:
             LOG.error("%s: Couldn't find relative path of '%s' from '%s'.",
-                      self._name, full_path, Path().absolute())
+                      self.name, full_path, Path().absolute())
             return full_path
         return str(rel_path)
 
@@ -140,5 +147,5 @@ class Linter(metaclass=ABCMeta):
             match: Pattern match.
         """
         if isinstance(match_result, dict):
-            return LinterOutput(self._name, **match_result)
-        return LinterOutput(self._name, *match_result)
+            return LinterOutput(self.name, **match_result)
+        return LinterOutput(self.name, *match_result)
