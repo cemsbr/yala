@@ -45,6 +45,20 @@ class Pycodestyle(Linter):
         return self._parse_by_pattern(lines, pattern)
 
 
+class Mypy(Linter):
+    """Mypy parser."""
+
+    name = 'mypy'
+
+    def parse(self, lines):
+        """Get :class:`base.Result` parameters using regex."""
+        pattern = re.compile(r'''
+                             ^(?P<path>.+?)
+                             :(?P<line_nr>\d+?)
+                             :\ (?P<msg>.+)$''', re.VERBOSE)
+        return self._parse_by_pattern(lines, pattern)
+
+
 class Pydocstyle(Linter):
     """Pydocstyle parser."""
 
