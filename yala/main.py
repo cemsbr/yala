@@ -21,7 +21,7 @@ from multiprocessing import Pool
 
 from docopt import docopt
 
-from .base import Config
+from .config import Config
 from .linters import Isort, Pycodestyle, Pydocstyle, Pylint, RadonCC, RadonMI
 
 LOG = logging.getLogger(__name__)

@@ -3,7 +3,7 @@ from configparser import ConfigParser
 from unittest import TestCase
 from unittest.mock import Mock, patch
 
-from yala.base import Config
+from yala.config import Config
 
 
 class TestConfig(TestCase):
@@ -22,7 +22,7 @@ class TestConfig(TestCase):
         user.read_dict(user_cfg)
         user.read = Mock()
 
-        with patch('yala.base.ConfigParser', side_effect=(default, user)):
+        with patch('yala.config.ConfigParser', side_effect=(default, user)):
             config = Config()
             linter_cfg = config.get_linter_config('lint')
             self.assertEqual(expected, linter_cfg['args'])
