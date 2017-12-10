@@ -21,10 +21,65 @@ from multiprocessing import Pool
 
 from docopt import docopt
 
-from .config import Config
-from .linters import Isort, Pycodestyle, Pydocstyle, Pylint, RadonCC, RadonMI
+from .linters import LINTERS
 
 LOG = logging.getLogger(__name__)
+
+
+class LinterRunner:
+    """Run linter and process results."""
+
+    config = None
+    targets = ''
+
+    def __init__(self, linter_class):
+        """Set the linter class."""
+        self._linter = linter_class()
+
+    @classmethod
+    def run(cls, linter_class):
+        """Run a linter and return its results."""
+        return cls(linter_class).get_results()
+
+    def get_results(self):
+        """Run the linter, parse, and return result list.
+
+        If a linter specified by the user is not found, return an error message
+        as a result.
+        """
+        try:
+            return list(self._parse_output())
+        except FileNotFoundError as exception:
+            # Error if the linter not found was chosen by the user
+            if self._is_user_choice():
+                error_msg = 'Did you install "{}"? Got exception: {}'.format(
+                    self._linter.name, exception)
+                return [error_msg]
+            # If the linter was not chosen by the user, do nothing
+            return tuple()
+
+    def _parse_output(self):
+        """Return parsed output."""
+        output = self._lint()
+        lines = (line for line in output.split('\n') if line)
+        return self._linter.parse(lines)
+
+    def _lint(self):
+        """Run linter in a subprocess."""
+        command = self._get_command()
+        process = subprocess.run(command, stdout=subprocess.PIPE)
+        LOG.info('Finished %s', ' '.join(command))
+        return process.stdout.decode('utf-8')
+
+    def _get_command(self):
+        """Return command with options and targets, ready for execution."""
+        cmd_str = self._linter.command_with_options + ' ' + self.targets
+        cmd_shlex = shlex.split(cmd_str)
+        return list(cmd_shlex)
+
+    def _is_user_choice(self):
+        """Return whether the linter was explicitly chosen by the user."""
+        return self._linter.name in self.config.linters
 
 
 class Main:
@@ -34,24 +89,26 @@ class Main:
     # pylint: disable=too-few-public-methods
 
     def __init__(self):
-        """Extra arguments for all linters (path to lint)."""
-        self._targets = []
+        """Initialize the only Config instance and set it in other classes."""
+        self._config = Config()
+        LinterRunner.config = self._config
+        for name, cls in LINTERS.items():
+            cls.config = self._config.get_linter_config(name)
 
-    def lint(self, *targets):
+    def lint(self, targets):
         """Run linters in parallel and sort all results."""
-        self._targets = targets
-        linters = (Pylint(), Pycodestyle(), Pydocstyle(), Isort(), RadonCC(),
-                   RadonMI())
+        LinterRunner.targets = ' '.join(targets)
+        linters = self._config.get_linter_classes(LINTERS)
         with Pool() as pool:
-            linters_results = pool.map(self._parse_linter, linters)
+            linters_results = pool.map(LinterRunner.run, linters)
         return sorted(chain.from_iterable(linters_results))
 
     def run(self, args):
         """Print results."""
         if args['--dump-config']:
-            self.dump_config()
+            self._config.dump_config(LINTERS.values())
         else:
-            results = self.lint(*args['<path>'])
+            results = self.lint(args['<path>'])
             self.print_results(results)
 
     @staticmethod
@@ -78,17 +135,6 @@ class Main:
             sys.exit('\n:( {} {} found.'.format(len(results), issue))
         else:
             print(':) No issues found.')
-
-    def _parse_linter(self, linter):
-        """Run a linter and return its results."""
-        cmd_str = ' '.join((linter.cmd, ' '.join(self._targets)))
-        cmd = shlex.split(cmd_str)
-        cmd = list(cmd)
-        process = subprocess.run(cmd, stdout=subprocess.PIPE)
-        LOG.info('Finished %s', ' '.join(cmd))
-        output = process.stdout.decode('utf-8')
-        lines = (line for line in output.split('\n') if line)
-        return list(linter.parse(lines))
 
 
 def main():

@@ -5,9 +5,6 @@ import re
 
 from .base import Linter, LinterOutput
 
-__all__ = ('Isort', 'Pycodestyle', 'Pydocstyle', 'Pyflakes', 'Pylint',
-           'RadonCC', 'RadonMI')
-
 
 class Isort(Linter):
     """Isort parser."""
@@ -149,3 +146,7 @@ class RadonMI(Linter):
                              ^(?P<path>.+)
                              \ -\ (?P<msg>[A-F])$''', re.VERBOSE)
         return self._parse_by_pattern(lines, pattern)
+
+
+#: dict: All Linter subclasses indexed by class name
+LINTERS = {cls.name: cls for cls in Linter.__subclasses__()}

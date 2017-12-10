@@ -3,8 +3,6 @@ import logging
 from abc import ABCMeta, abstractmethod
 from pathlib import Path
 
-from .config import Config
-
 LOG = logging.getLogger(__name__)
 
 
@@ -63,9 +61,9 @@ class Linter(metaclass=ABCMeta):
     """Linter implementations should inherit from this class."""
 
     # Most methods are for child class only, not public.
-    # pylint: disable=too-few-public-methods
 
-    _config = Config()
+    #: dict: Configuration for a specific linter
+    config = None
 
     @property
     @classmethod
@@ -74,38 +72,34 @@ class Linter(metaclass=ABCMeta):
         """Name of this linter. Recommended to be the same as its command."""
         pass
 
-    def __init__(self, cmd=None):
-        """At least, the executable name.
+    @property
+    def command(self):
+        """Command to execute. Defaults to :attr:`name`.
 
-        cmd (str): Command to be executed. Default is :attr:`name`. For
-            arguments, configuring setup.cfg is recommended.
+        The options in config files are appended in
+        :meth:`command_with_options`.
         """
-        if cmd is None:
-            cmd = self.name
-        cls = type(self)
-        # pylint: disable=protected-access
-        self._config = cls._config.get_linter_config(cls.name)
-        # pylint: enable=protected-access
-        self.cmd = self._get_cmd(cmd)
+        return self.name
 
-    def _get_cmd(self, cmd):
-        """Add arguments from config and quote."""
-        if 'args' in self._config:
-            return ' '.join((cmd, self._config['args']))
-        return cmd
+    @property
+    def command_with_options(self):
+        """Add arguments from config to :attr:`command`."""
+        if 'args' in self.config:
+            return ' '.join((self.command, self.config['args']))
+        return self.command
 
     @abstractmethod
     def parse(self, lines):
         """Parse linter output and return results.
 
         Args:
-            lines (iterable): Lines of the output.
+            lines (iterable): Output lines.
 
         Returns:
             iterable of Result: Linter results.
 
         """
-        raise NotImplementedError
+        pass
 
     def _get_relative_path(self, full_path):
         """Return the relative path from current path."""

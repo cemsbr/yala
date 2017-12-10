@@ -1,5 +1,6 @@
 """Yala configuration."""
 import logging
+import re
 from configparser import ConfigParser
 from pathlib import Path
 
@@ -13,22 +14,58 @@ class Config:
     ``self._config``.
     """
 
-    # pylint: disable=too-few-public-methods
+    _config = None
 
     _CFG_FILE = 'setup.cfg'
     #: str: Section of the config file.
     _CFG_SECTION = 'yala'
 
     def __init__(self):
-        """Concatenate default and user config from filenames.
-
-        Args:
-            default_file (pathlib.Path): Yala's default file.
-            user_file (pathlib.Path, str): User config file. May not exist.
-        """
+        """Read default and user config files."""
         default_cfg = self._read_default_file()
         user_cfg = self._read_user_files()
-        self.config = self._merge(default_cfg, user_cfg)
+        self._config = self._merge(default_cfg, user_cfg)
+        self.linters = self._get_linters()
+
+    def dump_config(self, linters_names):
+        """Print all yala configurations, including default and user's."""
+        if LOG.isEnabledFor(logging.INFO):
+            print()  # blank line separator if log info is enabled
+            # disable logging filenames again
+            logger = logging.getLogger()
+            logger.setLevel(logging.NOTSET)
+            logger.propagate = False
+        for key, value in self._config.items():
+            if key != 'linters':
+                print(f'{key}: {value}')
+        active_linters = self.linters or linters_names
+        print('linters:', ', '.join(active_linters))
+
+    def get_linter_classes(self, classes):
+        """Return linters to be executed."""
+        if self.linters:
+            return (classes[linter]
+                    for linter in self.linters
+                    if linter in classes)
+        return classes.values()
+
+    def _get_linters(self):
+        """Return linters' names found in config files."""
+        linters = []
+        user_value = self._config.get('linters', '')
+        # For each line of "linters" value, use comma as separator
+        for line in user_value.splitlines():
+            line_linters = [linter for linter in re.split(r'\s*,\s*', line)
+                            if linter]
+            linters.extend(line_linters)
+        return linters
+
+    def get_linter_config(self, name):
+        """Return linter options without linter name prefix."""
+        prefix = name + ' '
+        return {k[len(prefix):]: v
+                for k, v in self._config.items()
+                if k.startswith(prefix)}
 
     @classmethod
     def _read_default_file(cls):
@@ -51,13 +88,6 @@ class Config:
                 LOG.info('Reading %s', user_file)
                 user_cfg.read(str(user_file))
         return user_cfg
-
-    def get_linter_config(self, name):
-        """Return linter options without linter name prefix."""
-        prefix = name + ' '
-        return {k[len(prefix):]: v
-                for k, v in self.config.items()
-                if k.startswith(prefix)}
 
     @classmethod
     def _merge(cls, default, user):
