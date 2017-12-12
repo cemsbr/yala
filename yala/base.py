@@ -70,7 +70,7 @@ class Linter(metaclass=ABCMeta):
     @abstractmethod
     def name(cls):
         """Name of this linter. Recommended to be the same as its command."""
-        pass
+        pass  # pragma: no cover
 
     @property
     def command(self):
@@ -99,7 +99,7 @@ class Linter(metaclass=ABCMeta):
             iterable of Result: Linter results.
 
         """
-        pass
+        pass  # pragma: no cover
 
     def _get_relative_path(self, full_path):
         """Return the relative path from current path."""

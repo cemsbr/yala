@@ -34,6 +34,7 @@ class LinterRunner:
 
     def __init__(self, linter_class):
         """Set the linter class."""
+        linter_class.config = self.config.get_linter_config(linter_class.name)
         self._linter = linter_class()
 
     @classmethod
@@ -50,7 +51,7 @@ class LinterRunner:
         try:
             return list(self._parse_output())
         except FileNotFoundError as exception:
-            # Error if the linter not found was chosen by the user
+            # Error if the linter was not found but was chosen by the user
             if self._is_user_choice():
                 error_msg = 'Did you install "{}"? Got exception: {}'.format(
                     self._linter.name, exception)
@@ -77,10 +78,6 @@ class LinterRunner:
         cmd_shlex = shlex.split(cmd_str)
         return list(cmd_shlex)
 
-    def _is_user_choice(self):
-        """Return whether the linter was explicitly chosen by the user."""
-        return self._linter.name in self.config.linters
-
 
 class Main:
     """Parse all linters and aggregate results."""
@@ -88,25 +85,37 @@ class Main:
     # We only need the ``run`` method.
     # pylint: disable=too-few-public-methods
 
-    def __init__(self):
-        """Initialize the only Config instance and set it in other classes."""
-        self._config = Config()
+    def __init__(self, config=None, all_linters=None):
+        """Initialize the only Config object and assign it to other classes.
+
+        Args:
+            config (Config): Config object.
+            all_linters (dict): Names and classes of all available linters.
+        """
+        self._classes = all_linters or LINTERS
+        self._config = config or Config(self._classes)
         LinterRunner.config = self._config
-        for name, cls in LINTERS.items():
-            cls.config = self._config.get_linter_config(name)
 
     def lint(self, targets):
-        """Run linters in parallel and sort all results."""
+        """Run linters in parallel and sort all results.
+
+        Args:
+            targets (list): List of files and folders to lint.
+        """
         LinterRunner.targets = ' '.join(targets)
-        linters = self._config.get_linter_classes(LINTERS)
+        linters = self._config.get_linter_classes()
         with Pool() as pool:
             linters_results = pool.map(LinterRunner.run, linters)
         return sorted(chain.from_iterable(linters_results))
 
-    def run(self, args):
-        """Print results."""
+    def run_from_cli(self, args):
+        """Read arguments, run and print results.
+
+        Args:
+            args (dict): Arguments parsed by docopt.
+        """
         if args['--dump-config']:
-            self._config.dump_config(LINTERS.values())
+            self._config.print_config()
         else:
             results = self.lint(args['<path>'])
             self.print_results(results)
@@ -126,8 +135,6 @@ class Main:
     @staticmethod
     def print_results(results):
         """Print linter results and exits with an error if there's any."""
-        if LOG.isEnabledFor(logging.INFO):
-            print()  # blank line separator if log info is enabled
         if results:
             for result in results:
                 print(result)

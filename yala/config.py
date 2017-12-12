@@ -20,34 +20,33 @@ class Config:
     #: str: Section of the config file.
     _CFG_SECTION = 'yala'
 
-    def __init__(self):
-        """Read default and user config files."""
+    def __init__(self, all_linters):
+        """Read default and user config files.
+
+        Args:
+            all_linters (dict): Names and classes of all available linters.
+        """
+        self._all_linters = all_linters
         default_cfg = self._read_default_file()
         user_cfg = self._read_user_files()
         self._config = self._merge(default_cfg, user_cfg)
-        self.linters = self._get_linters()
+        if 'linters' in self._config:
+            self._active_linters = self.user_linters = self._get_linters()
+        else:
+            self.user_linters = []
+            self._active_linters = all_linters
 
-    def dump_config(self, linters_names):
+    def print_config(self):
         """Print all yala configurations, including default and user's."""
-        if LOG.isEnabledFor(logging.INFO):
-            print()  # blank line separator if log info is enabled
-            # disable logging filenames again
-            logger = logging.getLogger()
-            logger.setLevel(logging.NOTSET)
-            logger.propagate = False
+        print('linters:', ', '.join(self._active_linters))
         for key, value in self._config.items():
             if key != 'linters':
                 print(f'{key}: {value}')
-        active_linters = self.linters or linters_names
-        print('linters:', ', '.join(active_linters))
 
-    def get_linter_classes(self, classes):
+    def get_linter_classes(self):
         """Return linters to be executed."""
-        if self.linters:
-            return (classes[linter]
-                    for linter in self.linters
-                    if linter in classes)
-        return classes.values()
+        return (self._all_linters[linter]
+                for linter in self._active_linters)
 
     def _get_linters(self):
         """Return linters' names found in config files."""
