@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements/run.txt setup.py
 #
-astroid==1.5.3            # via pylint
+astroid==1.6.0            # via pylint
 colorama==0.3.9           # via radon
 docopt==0.6.2
 flake8-polyfill==1.0.2    # via radon
