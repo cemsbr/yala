@@ -5,7 +5,7 @@
 #    pip-compile --output-file requirements/dev.txt requirements/dev.in
 #
 -e .
-astroid==1.5.3            # via pylint
+astroid==1.6.0            # via pylint
 bandit==1.4.0
 certifi==2017.11.5        # via requests
 chardet==3.0.4            # via requests
@@ -17,7 +17,7 @@ docutils==0.14            # via rstcheck
 dparse==0.2.1             # via safety
 eradicate==0.2.1
 first==2.0.1              # via pip-tools
-flake8-polyfill==1.0.1    # via radon
+flake8-polyfill==1.0.2    # via radon
 flake8==3.5.0             # via flake8-polyfill
 gitdb2==2.0.3             # via gitpython
 gitpython==2.1.8          # via bandit
@@ -37,7 +37,7 @@ pyflakes==1.6.0           # via flake8
 pylint==1.8.1
 pyparsing==2.2.0          # via packaging
 pyyaml==3.12              # via bandit, dparse
-radon==2.1.1
+radon==2.2.0
 requests==2.18.4          # via safety
 rstcheck==3.1
 safety==1.6.1
