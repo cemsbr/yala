@@ -55,6 +55,7 @@ class LinterOutput:
         """Use ``_cmp_key`` to compare two lines."""
         if isinstance(other, type(self)):
             return self._cmp_key() < self._cmp_key(other)
+        return super().__lt__(other)
 
 
 class Config:
