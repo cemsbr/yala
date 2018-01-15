@@ -64,7 +64,7 @@ class Main:
             logger.setLevel(logging.NOTSET)
             logger.propagate = False
         for key, value in Config().config.items():
-            print(f'{key}: {value}')
+            print('{}: {}'.format(key, value))
 
     @staticmethod
     def print_results(results):
@@ -75,7 +75,7 @@ class Main:
             for result in results:
                 print(result)
             issue = 'issues' if len(results) > 1 else 'issue'
-            sys.exit(f'\n:( {len(results)} {issue} found.')
+            sys.exit('\n:( {} {} found.'.format(len(results), issue))
         else:
             print(':) No issues found.')
 
@@ -93,5 +93,5 @@ class Main:
 
 def main():
     """Entry point for the console script."""
-    args = docopt(__doc__, version='1.3.3')
+    args = docopt(__doc__, version='1.4.0')
     Main().run(args)

@@ -24,17 +24,17 @@ For now, there are some Python linters available: isort, Pylint, Pycodestyle, Py
 
 Install
 -------
-Requires Python >= 3.6.
+Tested with Python >= 3.5.
 
 .. code-block:: bash
 
-  sudo pip3.6 install --upgrade yala
+  sudo pip3 install --upgrade yala
 
 If you are willing to hack yala's code, run the command below in this README's folder:
 
 .. code-block:: bash
 
-  sudo pip3.6 install -e .[dev]
+  sudo pip3 install -e .[dev]
 
 
 Usage

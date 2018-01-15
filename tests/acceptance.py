@@ -37,7 +37,7 @@ class TestAcceptance(TestCase):
             self._assert_result(line, linter_name)
 
     def _assert_result(self, line, linter_name):
-        full_line = f'tests_data/fake_code.py|{line} [{linter_name}]'
+        full_line = 'tests_data/fake_code.py|{} [{}]'.format(line, linter_name)
         self.assertIn(full_line, self._output)
 
     def test_exit_error(self):
