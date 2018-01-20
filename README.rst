@@ -41,21 +41,60 @@ Usage
 -----
 Just call ``yala`` followed by the files and/or folders to lint.
 
+
+Configuration
+-------------
+
+Besides the configuration of each linter, as in their docs, you can specify other options in *setup.cfg*.
+
+It's possible to define command line arguments for linters in *setup.cfg*, which is particularly useful for *pylint*, a linter that ignores this file and requires you to write an extra one only for itself.
+
+The default configuration file is ``yala/setup.cfg`` that you can copy and customize.
+
+You can have this file in upper directories and override it in lower directories if needed.
+
+
 Linters' options
 ................
 
-You can configure the linters as explained in their docs (e.g. *isort* section in *setup.cfg*). To change the **command line options** for a linter, create a *setup.cfg* file in the same folder you run yala from. The default configuration is in the file ``yala/setup.cfg`` that you can copy and customize (you can remove unchanged lines). For example, to output grades C and lower for Radon Maintainability Index (default is D and lower), add the following to *setup.cfg*:
+For example, to disable pylint's TODO warnings and output grades C and lower for Radon Maintainability Index (default is D or worse), add the following to *setup.cfg*:
 
 .. code-block:: ini
 
   [yala]
-  radon mi args = --min C
   pylint args = --disable=TODO
+  radon mi args = --min C
 
-Besides "radon mi", it's possible to define cli options for "isort", "pycodestyle", "pydocstyle", "pyflakes", "pylint" and "radon cc" (the names are exactly as they are called in command line). Of course, you can still use other means provided by each linter (e.g. "isort" section).
+Besides `pylint` and `radon mi`, you can define CLI options for `isort`, `pycodestyle`, `pydocstyle`, `pyflakes`, `pylint` and `radon cc` (the names are exactly as they are called in command line).
 
-Adding a linter
----------------
+
+Choosing linters
+................
+
+Default linters are: isort, pycodestyle, pydocstyle, pylint, radon (cc/mi).
+Optionals are: pyflakes and mypy (you need to install them manually). 
+
+You can customize the linters in *setup.cfg* by either:
+
+.. code-block:: ini
+
+  [yala]
+  linters = isort, pycodestyle
+
+or
+
+.. code-block:: ini
+
+  [yala]
+  linters = 
+    isort
+    pycodestyle
+
+Or even a mix of both: multiple linters in multiple.
+
+
+Hacking: Adding a linter
+------------------------
 Check the file *yala/linters.py* and feel free to ask for help.
 
 

@@ -30,33 +30,48 @@ class Config:
         default_cfg = self._read_default_file()
         user_cfg = self._read_user_files()
         self._config = self._merge(default_cfg, user_cfg)
+        self.user_linters = []  # chosen by the user
+        self.linters = {}       # chosen by the user or all of them
+        self._set_linters()
+
+    def _set_linters(self):
+        """Do not use pyflakes unless it was specified.
+
+        We can't ignore a pyflakes error, so we don't use it by default.
+        """
         if 'linters' in self._config:
-            self._active_linters = self.user_linters = self._get_linters()
+            self.user_linters = self._parse_cfg_linters()
+            self.linters = {linter: self._all_linters[linter]
+                            for linter in self.user_linters}
         else:
-            self.user_linters = []
-            self._active_linters = all_linters
+            self.linters = self._all_linters
+            if 'pyflakes' in self.linters:
+                self.linters.pop('pyflakes')
 
     def print_config(self):
         """Print all yala configurations, including default and user's."""
-        print('linters:', ', '.join(self._active_linters))
+        linters = self.user_linters or list(self.linters)
+        print('linters:', ', '.join(linters))
         for key, value in self._config.items():
             if key != 'linters':
-                print(f'{key}: {value}')
+                print('{}: {}'.format(key, value))
 
     def get_linter_classes(self):
         """Return linters to be executed."""
-        return (self._all_linters[linter]
-                for linter in self._active_linters)
+        return (self._all_linters[linter] for linter in self.linters)
 
-    def _get_linters(self):
-        """Return linters' names found in config files."""
+    def _parse_cfg_linters(self):
+        """Return valid linter names found in config files."""
         linters = []
         user_value = self._config.get('linters', '')
         # For each line of "linters" value, use comma as separator
         for line in user_value.splitlines():
-            line_linters = [linter for linter in re.split(r'\s*,\s*', line)
-                            if linter]
-            linters.extend(line_linters)
+            line_linters = (linter for linter in re.split(r'\s*,\s*', line))
+            for linter in line_linters:
+                if linter in self._all_linters:
+                    linters.append(linter)
+                else:
+                    LOG.warning('%s is not a valid linter', linter)
         return linters
 
     def get_linter_config(self, name):

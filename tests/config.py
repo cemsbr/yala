@@ -40,7 +40,7 @@ class TestConfig(TestCase):
     @patch('sys.stdout', new_callable=StringIO)
     def test_dump_with_linters(self, mock_stdout):
         """Test default configuration dump."""
-        all_linters = ('linter a', 'linter b')
+        all_linters = {'linter a': 'LinterA', 'linter b': 'LinterB'}
         user_config = {'linters': 'linter b'}
         config = self._get_config(all_linters, user_config)
         config.print_config()

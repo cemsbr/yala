@@ -21,6 +21,7 @@ from multiprocessing import Pool
 
 from docopt import docopt
 
+from .config import Config
 from .linters import LINTERS
 
 LOG = logging.getLogger(__name__)
@@ -30,31 +31,32 @@ class LinterRunner:
     """Run linter and process results."""
 
     config = None
-    targets = ''
+    targets = []
 
     def __init__(self, linter_class):
-        """Set the linter class."""
+        """Set linter class and its configuration."""
         linter_class.config = self.config.get_linter_config(linter_class.name)
         self._linter = linter_class()
 
     @classmethod
     def run(cls, linter_class):
-        """Run a linter and return its results."""
-        return cls(linter_class).get_results()
+        """Run a linter and return the results."""
+        runner = cls(linter_class)
+        return runner.get_results()
 
     def get_results(self):
         """Run the linter, parse, and return result list.
 
         If a linter specified by the user is not found, return an error message
-        as a result.
+        as result.
         """
         try:
             return list(self._parse_output())
         except FileNotFoundError as exception:
             # Error if the linter was not found but was chosen by the user
-            if self._is_user_choice():
-                error_msg = 'Did you install "{}"? Got exception: {}'.format(
-                    self._linter.name, exception)
+            if self._linter.name in self.config.user_linters:
+                error_msg = 'Could not find {}. Did you install it? ' \
+                    'Got exception: {}'.format(self._linter.name, exception)
                 return [error_msg]
             # If the linter was not chosen by the user, do nothing
             return tuple()
@@ -74,7 +76,8 @@ class LinterRunner:
 
     def _get_command(self):
         """Return command with options and targets, ready for execution."""
-        cmd_str = self._linter.command_with_options + ' ' + self.targets
+        targets = ' '.join(self.targets)
+        cmd_str = self._linter.command_with_options + ' ' + targets
         cmd_shlex = shlex.split(cmd_str)
         return list(cmd_shlex)
 
@@ -102,7 +105,7 @@ class Main:
         Args:
             targets (list): List of files and folders to lint.
         """
-        LinterRunner.targets = ' '.join(targets)
+        LinterRunner.targets = targets
         linters = self._config.get_linter_classes()
         with Pool() as pool:
             linters_results = pool.map(LinterRunner.run, linters)
@@ -121,18 +124,6 @@ class Main:
             self.print_results(results)
 
     @staticmethod
-    def dump_config():
-        """Print all yala configurations, including default and user's."""
-        if LOG.isEnabledFor(logging.INFO):
-            print()  # blank line separator if log info is enabled
-            # disable logging filenames again
-            logger = logging.getLogger(Config.__module__)
-            logger.setLevel(logging.NOTSET)
-            logger.propagate = False
-        for key, value in Config().config.items():
-            print('{}: {}'.format(key, value))
-
-    @staticmethod
     def print_results(results):
         """Print linter results and exits with an error if there's any."""
         if results:
@@ -146,5 +137,5 @@ class Main:
 
 def main():
     """Entry point for the console script."""
-    args = docopt(__doc__, version='1.4.0')
-    Main().run(args)
+    args = docopt(__doc__, version='1.5.0')
+    Main().run_from_cli(args)

@@ -6,12 +6,12 @@ from setuptools import setup
 HERE = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(HERE, 'README.rst')) as f:
     LONG_DESC = f.read()
 
 setup(
     name='yala',
-    version='1.4.0',
+    version='1.5.0',
     description='Yet Another Linter Aggregator',
     long_description=LONG_DESC,
     url='https://github.com/cemsbr/yala',
