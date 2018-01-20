@@ -40,7 +40,7 @@ class Config:
         We can't ignore a pyflakes error, so we don't use it by default.
         """
         if 'linters' in self._config:
-            self.user_linters = self._parse_cfg_linters()
+            self.user_linters = list(self._parse_cfg_linters())
             self.linters = {linter: self._all_linters[linter]
                             for linter in self.user_linters}
         else:
@@ -62,17 +62,18 @@ class Config:
 
     def _parse_cfg_linters(self):
         """Return valid linter names found in config files."""
-        linters = []
         user_value = self._config.get('linters', '')
         # For each line of "linters" value, use comma as separator
         for line in user_value.splitlines():
-            line_linters = (linter for linter in re.split(r'\s*,\s*', line))
-            for linter in line_linters:
-                if linter in self._all_linters:
-                    linters.append(linter)
-                else:
-                    LOG.warning('%s is not a valid linter', linter)
-        return linters
+            yield from self._parse_linters_line(line)
+
+    def _parse_linters_line(self, line):
+        linters = (linter for linter in re.split(r'\s*,\s*', line))
+        for linter in linters:
+            if linter in self._all_linters:
+                yield linter
+            elif linter:
+                LOG.warning('%s is not a valid linter', linter)
 
     def get_linter_config(self, name):
         """Return linter options without linter name prefix."""

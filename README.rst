@@ -57,7 +57,7 @@ You can have this file in upper directories and override it in lower directories
 Linters' options
 ................
 
-For example, to disable pylint's TODO warnings and output grades C and lower for Radon Maintainability Index (default is D or worse), add the following to *setup.cfg*:
+For example, to disable a specific pylint warning and output grades C and lower for Radon Maintainability Index (default is D or worse), add the following to *setup.cfg*:
 
 .. code-block:: ini
 
