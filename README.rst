@@ -90,7 +90,7 @@ or
     isort
     pycodestyle
 
-Or even a mix of both: multiple linters in multiple.
+Or even a mix of both: multiple linters in multiple lines.
 
 
 Hacking: Adding a linter
@@ -98,7 +98,7 @@ Hacking: Adding a linter
 Check the file *yala/linters.py* and feel free to ask for help.
 
 
-.. |build| image:: https://semaphoreci.com/api/v1/cemsbr/yala/branches/ci/shields_badge.svg
+.. |build| image:: https://semaphoreci.com/api/v1/cemsbr/yala/branches/master/shields_badge.svg
           :target: https://semaphoreci.com/cemsbr/yala
 
 .. |coveralls| image:: https://coveralls.io/repos/github/cemsbr/yala/badge.svg?branch=master
