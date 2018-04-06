@@ -40,7 +40,7 @@ pyyaml==3.12              # via bandit, dparse
 radon==2.2.0
 requests==2.18.4          # via safety
 rstcheck==3.2
-safety==1.7.0
+safety==1.8.1
 six==1.11.0               # via astroid, bandit, dparse, mando, packaging, pip-tools, pydocstyle, pylint, stevedore, tox
 smmap2==2.0.3             # via gitdb2
 snowballstemmer==1.2.1    # via pydocstyle
