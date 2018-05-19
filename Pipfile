@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+docopt = "*"
+isort = "*"
+pycodestyle = "*"
+pydocstyle = "*"
+pylint = "*"
+radon = "*"
+
+[dev-packages]
+bandit = "*"
+coverage = "<4.4"
+eradicate = "*"
+pipenv = "*"
+rstcheck = "*"
+safety = "*"
+tox = "*"

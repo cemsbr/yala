@@ -53,6 +53,7 @@ setup(
             'rstcheck',
             'safety',
             'tox',
+            'pipenv',
         ]
     },
     package_data={
