@@ -50,10 +50,10 @@ setup(
             'coverage<4.4',
             'eradicate',
             'pip-tools',
+            'pipenv',
             'rstcheck',
             'safety',
             'tox',
-            'pipenv',
         ]
     },
     package_data={
