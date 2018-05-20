@@ -6,19 +6,23 @@
 #
 -e .
 astroid==1.6.4            # via pylint
+backports.functools-lru-cache==1.5  # via astroid, pylint
 bandit==1.4.0
-certifi==2018.4.16        # via requests
+certifi==2018.4.16        # via pipenv, requests
 chardet==3.0.4            # via requests
 click==6.7                # via pip-tools, safety
 colorama==0.3.9           # via radon
+configparser==3.5.0       # via flake8, pydocstyle, pylint
 coverage==4.3.4
 docopt==0.6.2
 docutils==0.14            # via rstcheck
 dparse==0.4.1             # via safety
+enum34==1.1.6             # via astroid, flake8
 eradicate==0.2.1
 first==2.0.1              # via pip-tools
 flake8-polyfill==1.0.2    # via radon
 flake8==3.5.0             # via flake8-polyfill
+futures==3.2.0            # via isort
 gitdb2==2.0.3             # via gitpython
 gitpython==2.1.10         # via bandit
 idna==2.6                 # via requests
@@ -29,6 +33,7 @@ mccabe==0.6.1             # via flake8, pylint
 packaging==17.1           # via dparse, safety
 pbr==4.0.3                # via stevedore
 pip-tools==2.0.2
+pipenv==2018.5.18
 pluggy==0.6.0             # via tox
 py==1.5.3                 # via tox
 pycodestyle==2.3.1        # via flake8
@@ -41,11 +46,13 @@ radon==2.2.0
 requests==2.18.4          # via safety
 rstcheck==3.3
 safety==1.8.1
-six==1.11.0               # via astroid, bandit, dparse, mando, packaging, pip-tools, pydocstyle, pylint, stevedore, tox
+singledispatch==3.4.0.3   # via astroid, pylint
+six==1.11.0               # via astroid, bandit, dparse, mando, packaging, pip-tools, pydocstyle, pylint, singledispatch, stevedore, tox
 smmap2==2.0.3             # via gitdb2
 snowballstemmer==1.2.1    # via pydocstyle
 stevedore==1.28.0         # via bandit
 tox==3.0.0
 urllib3==1.22             # via requests
-virtualenv==16.0.0        # via tox
+virtualenv-clone==0.3.0   # via pipenv
+virtualenv==16.0.0        # via pipenv, tox
 wrapt==1.10.11            # via astroid
