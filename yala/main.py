@@ -131,20 +131,24 @@ class Main:
             stdout, stderr = self.lint(args['<path>'])
             self.print_results(stdout, stderr)
 
-    @staticmethod
-    def print_results(stdout, stderr):
+    @classmethod
+    def print_results(cls, stdout, stderr):
         """Print linter results and exits with an error if there's any."""
         for line in stderr:
             print(line, file=sys.stderr)
         if stdout:
             if stderr:  # blank line to separate stdout from stderr
                 print(file=sys.stderr)
-            for line in stdout:
-                print(line)
-            issue = 'issues' if len(stdout) > 1 else 'issue'
-            sys.exit('\n:( {} {} found.'.format(len(stdout), issue))
+            cls._print_stdout(stdout)
         else:
             print(':) No issues found.')
+
+    @staticmethod
+    def _print_stdout(stdout):
+        for line in stdout:
+            print(line)
+        issue = 'issues' if len(stdout) > 1 else 'issue'
+        sys.exit('\n:( {} {} found.'.format(len(stdout), issue))
 
 
 def main():
