@@ -51,28 +51,17 @@ class LinterRunner:
         as result.
         """
         try:
-            return list(self._parse_output())
+            stdout, stderr = self._lint()
+            # Can't return a generator from a subprocess
+            return list(stdout), stderr or []
         except FileNotFoundError as exception:
             # Error if the linter was not found but was chosen by the user
             if self._linter.name in self.config.user_linters:
                 error_msg = 'Could not find {}. Did you install it? ' \
                     'Got exception: {}'.format(self._linter.name, exception)
-                return [error_msg]
+                return [[], [error_msg]]
             # If the linter was not chosen by the user, do nothing
-            return tuple()
-
-    def _parse_output(self):
-        """Return parsed output."""
-        output = self._lint()
-        lines = (line for line in output.split('\n') if line)
-        return self._linter.parse(lines)
-
-    def _lint(self):
-        """Run linter in a subprocess."""
-        command = self._get_command()
-        process = subprocess.run(command, stdout=subprocess.PIPE)
-        LOG.info('Finished %s', ' '.join(command))
-        return process.stdout.decode('utf-8')
+            return [[], []]
 
     def _get_command(self):
         """Return command with options and targets, ready for execution."""
@@ -80,6 +69,23 @@ class LinterRunner:
         cmd_str = self._linter.command_with_options + ' ' + targets
         cmd_shlex = shlex.split(cmd_str)
         return list(cmd_shlex)
+
+    def _lint(self):
+        """Run linter in a subprocess."""
+        command = self._get_command()
+        process = subprocess.run(command, stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        LOG.info('Finished %s', ' '.join(command))
+        stdout, stderr = self._get_output_lines(process)
+        return self._linter.parse(stdout), self._parse_stderr(stderr)
+
+    @staticmethod
+    def _get_output_lines(process):
+        return [(line for line in output.decode('utf-8').split('\n') if line)
+                for output in (process.stdout, process.stderr)]
+
+    def _parse_stderr(self, lines):
+        return ['[{}] {}'.format(self._linter.name, line) for line in lines]
 
 
 class Main:
@@ -108,8 +114,10 @@ class Main:
         LinterRunner.targets = targets
         linters = self._config.get_linter_classes()
         with Pool() as pool:
-            linters_results = pool.map(LinterRunner.run, linters)
-        return sorted(chain.from_iterable(linters_results))
+            out_err_none = pool.map(LinterRunner.run, linters)
+        out_err = [item for item in out_err_none if item is not None]
+        stdout, stderr = zip(*out_err)
+        return sorted(chain.from_iterable(stdout)), chain.from_iterable(stderr)
 
     def run_from_cli(self, args):
         """Read arguments, run and print results.
@@ -120,17 +128,21 @@ class Main:
         if args['--dump-config']:
             self._config.print_config()
         else:
-            results = self.lint(args['<path>'])
-            self.print_results(results)
+            stdout, stderr = self.lint(args['<path>'])
+            self.print_results(stdout, stderr)
 
     @staticmethod
-    def print_results(results):
+    def print_results(stdout, stderr):
         """Print linter results and exits with an error if there's any."""
-        if results:
-            for result in results:
-                print(result)
-            issue = 'issues' if len(results) > 1 else 'issue'
-            sys.exit('\n:( {} {} found.'.format(len(results), issue))
+        for line in stderr:
+            print(line, file=sys.stderr)
+        if stdout:
+            if stderr:  # blank line to separate stdout from stderr
+                print(file=sys.stderr)
+            for line in stdout:
+                print(line)
+            issue = 'issues' if len(stdout) > 1 else 'issue'
+            sys.exit('\n:( {} {} found.'.format(len(stdout), issue))
         else:
             print(':) No issues found.')
 

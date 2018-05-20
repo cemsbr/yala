@@ -18,12 +18,12 @@ class TestLinterRunner(unittest.TestCase):
         mock_config.user_linters = [name]
         with patch('yala.main.subprocess.run', side_effect=FileNotFoundError):
             LinterRunner.config = mock_config
-            results = LinterRunner.run(cls)
-        self.assertIn('Did you install', results[0])
+            _, stderr = LinterRunner.run(cls)
+        self.assertIn('Did you install', stderr[0])
 
     @patch('yala.main.Config')
     def test_not_chosen_not_found(self, mock_config):
-        """Should print an error when chosen linter is not found."""
+        """Should not print an error when chosen linter is not found."""
         # Usuário escolhe um linter
         name = 'my linter'
         cls = self._mock_linter_class(name)
@@ -31,8 +31,9 @@ class TestLinterRunner(unittest.TestCase):
         mock_config.user_linters = []
         with patch('yala.main.subprocess.run', side_effect=FileNotFoundError):
             LinterRunner.config = mock_config
-            results = LinterRunner.run(cls)
-        self.assertEqual(0, len(results))
+            stdout, stderr = LinterRunner.run(cls)
+        self.assertEqual(0, len(stdout))
+        self.assertEqual(0, len(stderr))
 
     @staticmethod
     def _mock_linter_class(name):
