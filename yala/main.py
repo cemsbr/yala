@@ -153,5 +153,5 @@ class Main:
 
 def main():
     """Entry point for the console script."""
-    args = docopt(__doc__, version='1.5.0')
+    args = docopt(__doc__, version='1.6.0')
     Main().run_from_cli(args)
