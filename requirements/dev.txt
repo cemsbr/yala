@@ -39,7 +39,7 @@ pylint==1.9.1
 pyparsing==2.2.0          # via packaging
 pyyaml==3.12              # via bandit, dparse
 radon==2.2.0
-requests==2.18.4          # via safety
+requests==2.19.1          # via safety
 rstcheck==3.3
 safety==1.8.1
 six==1.11.0               # via astroid, bandit, dparse, mando, packaging, pip-tools, pydocstyle, pylint, stevedore, tox
