@@ -113,7 +113,7 @@ Check the file *yala/linters.py* and feel free to ask for help.
 .. |codeclimate| image:: https://api.codeclimate.com/v1/badges/26b718c43a08555bf9c8/maintainability
                 :target: https://codeclimate.com/github/cemsbr/yala/maintainability
 
-.. |sonarcloud| image:: https://sonarcloud.io/api/badges/gate?key=github-com-cemsbr-yala
+.. |sonarcloud| image:: https://sonarcloud.io/api/project_badges/measure?project=github-com-cemsbr-yala&metric=alert_status
                :target: https://sonarcloud.io/dashboard?id=github-com-cemsbr-yala
 
 .. |issue_time| image:: http://isitmaintained.com/badge/resolution/cemsbr/yala.svg
