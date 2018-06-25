@@ -29,7 +29,7 @@ mccabe==0.6.1             # via flake8, pylint
 packaging==17.1           # via dparse, safety
 pbr==4.0.4                # via stevedore
 pip-tools==2.0.2
-pipenv==2018.5.18
+pipenv==2018.6.25
 pluggy==0.6.0             # via tox
 py==1.5.3                 # via tox
 pycodestyle==2.3.1        # via flake8
