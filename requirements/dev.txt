@@ -46,7 +46,7 @@ six==1.11.0               # via astroid, bandit, dparse, mando, packaging, pip-t
 smmap2==2.0.3             # via gitdb2
 snowballstemmer==1.2.1    # via pydocstyle
 stevedore==1.28.0         # via bandit
-tox==3.0.0
+tox==3.1.2
 urllib3==1.23             # via requests
 virtualenv-clone==0.3.0   # via pipenv
 virtualenv==16.0.0        # via pipenv, tox
