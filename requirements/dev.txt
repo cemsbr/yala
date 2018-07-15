@@ -43,7 +43,7 @@ requests==2.19.1          # via safety
 rstcheck==3.3
 safety==1.8.1
 six==1.11.0               # via astroid, bandit, dparse, mando, packaging, pip-tools, pydocstyle, pylint, stevedore, tox
-smmap2==2.0.3             # via gitdb2
+smmap2==2.0.4             # via gitdb2
 snowballstemmer==1.2.1    # via pydocstyle
 stevedore==1.28.0         # via bandit
 tox==3.0.0
