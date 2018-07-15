@@ -19,7 +19,7 @@ eradicate==0.2.1
 first==2.0.1              # via pip-tools
 flake8-polyfill==1.0.2    # via radon
 flake8==3.5.0             # via flake8-polyfill
-gitdb2==2.0.3             # via gitpython
+gitdb2==2.0.4             # via gitpython
 gitpython==2.1.10         # via bandit
 idna==2.7                 # via requests
 isort==4.3.4              # via pylint
