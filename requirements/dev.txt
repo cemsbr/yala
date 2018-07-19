@@ -5,7 +5,7 @@
 #    pip-compile --output-file requirements/dev.txt requirements/dev.in
 #
 -e .
-astroid==1.6.5            # via pylint
+astroid==2.0.1            # via pylint
 bandit==1.4.0
 certifi==2018.4.16        # via pipenv, requests
 chardet==3.0.4            # via requests
