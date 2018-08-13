@@ -13,10 +13,7 @@ clean:
 	rm -rf .eggs/ .tox/ build/ dist/ yala.egg-info/
 
 update-deps:
-	@echo Upgrading packages...
-	pip-compile -Uo requirements/dev.txt requirements/dev.in >/dev/null
-	@sed -i -e 's/^-e file.*/-e ./' requirements/dev.txt
-	git diff requirements/dev.txt
+	pipenv update
 
 upload: clean
 	python setup.py clean sdist bdist_wheel upload -s
