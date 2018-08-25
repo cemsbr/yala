@@ -9,7 +9,6 @@ isort = "*"
 pycodestyle = "*"
 pydocstyle = "*"
 pylint = "*"
-radon = "*"
 
 [dev-packages]
 bandit = "*"
@@ -20,3 +19,7 @@ rstcheck = "*"
 safety = "*"
 tox = "*"
 nose = "*"
+yala = {editable = true, path = "."}
+
+[requires]
+python_version = "3.5"

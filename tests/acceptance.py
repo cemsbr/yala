@@ -79,6 +79,7 @@ class TestAcceptance(TestCase):
         )
         self._assert_results(expected, 'pylint')
 
+    @skip('Radon is disabled')
     def test_rest_radon_cc(self):
         """Check radon cc ouput."""
         expected = '5:0|high_complexity - D'

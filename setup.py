@@ -39,7 +39,6 @@ setup(
         'pycodestyle',
         'pydocstyle',
         'pylint',
-        'radon',
     ],
     # $ pip install -e .[dev,test]
     extras_require={
