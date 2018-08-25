@@ -35,18 +35,13 @@ class Config:
         self._set_linters()
 
     def _set_linters(self):
-        """Do not use pyflakes unless it was specified.
-
-        We can't ignore a pyflakes error, so we don't use it by default.
-        """
+        """Use user linters or all available when not specified."""
         if 'linters' in self._config:
             self.user_linters = list(self._parse_cfg_linters())
             self.linters = {linter: self._all_linters[linter]
                             for linter in self.user_linters}
         else:
             self.linters = self._all_linters
-            if 'pyflakes' in self.linters:
-                self.linters.pop('pyflakes')
 
     def print_config(self):
         """Print all yala configurations, including default and user's."""

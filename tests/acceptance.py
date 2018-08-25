@@ -1,7 +1,7 @@
 """Acceptance tests for yala executable."""
 from concurrent.futures import ThreadPoolExecutor
 from io import StringIO
-from unittest import TestCase, skip
+from unittest import TestCase
 from unittest.mock import patch
 
 from yala.main import main
@@ -60,15 +60,6 @@ class TestAcceptance(TestCase):
         expected = '1:None|D100: Missing docstring in public module'
         self._assert_result(expected, 'pydocstyle')
 
-    @skip('Pyflakes is disabled')
-    def test_pyflakes(self):
-        """Check Pyflakes output."""
-        expected = (
-            "1:None|'os' imported but unused",
-            "2:None|'abc' imported but unused"
-        )
-        self._assert_results(expected, 'pyflakes')
-
     def test_pylint(self):
         """Check Pylint output."""
         expected = (
@@ -78,9 +69,3 @@ class TestAcceptance(TestCase):
             '5:0|Too many branches (20/12) (R0912, too-many-branches)'
         )
         self._assert_results(expected, 'pylint')
-
-    @skip('Radon is disabled')
-    def test_rest_radon_cc(self):
-        """Check radon cc ouput."""
-        expected = '5:0|high_complexity - D'
-        self._assert_result(expected, 'radon cc')
