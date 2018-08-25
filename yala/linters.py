@@ -78,20 +78,6 @@ class Pydocstyle(Linter):
                 yield LinterOutput(self.name, path, msg, line_nr)
 
 
-class Pyflakes(Linter):
-    """Pyflakes parser."""
-
-    name = 'pyflakes'
-
-    def parse(self, lines):
-        """Get :class:`base.Result` parameters using regex."""
-        pattern = re.compile(r'''
-                             ^(?P<path>.+?)
-                             :(?P<line_nr>\d+?)
-                             :\ (?P<msg>.+)$''', re.VERBOSE)
-        return self._parse_by_pattern(lines, pattern)
-
-
 class Pylint(Linter):
     """Pylint parser."""
 
@@ -103,48 +89,6 @@ class Pylint(Linter):
                                  :(?P<msg>.+)
                                  :(?P<line_nr>\d+?)
                                  :(?P<col>\d+?)$""", re.VERBOSE)
-        return self._parse_by_pattern(lines, pattern)
-
-
-class RadonCC(Linter):
-    """Parser for radon ciclomatic complexity."""
-
-    name = 'radon cc'
-
-    def parse(self, lines):
-        """Get :class:`base.Result` parameters using regex.
-
-        The output has one line with the file path followed by others with
-        one problem per line.
-        """
-        # E.g. 'relative/path/to/file.py'
-        pattern_path = re.compile(r'^(\S.*$)')
-        # E.g. '    C 19:0 RadonCC - A'
-        pattern_result = re.compile(r'\s+\w (\d+):(\d+) (.+)$')
-        path = None
-        for line in lines:
-            match = pattern_path.match(line)
-            if match:
-                # We have the file path. Skip the remainder of the loop
-                path = line
-                continue
-            match = pattern_result.match(line)
-            if match:
-                # Output found for the file stored in ``path``.
-                line_nr, col, msg = match.groups()
-                yield LinterOutput(self.name, path, msg, line_nr, col)
-
-
-class RadonMI(Linter):
-    """Parser for radon maintainability index."""
-
-    name = 'radon mi'
-
-    def parse(self, lines):
-        """Get :class:`base.Result` parameters using regex."""
-        pattern = re.compile(r'''
-                             ^(?P<path>.+)
-                             \ -\ (?P<msg>[A-F])$''', re.VERBOSE)
         return self._parse_by_pattern(lines, pattern)
 
 
