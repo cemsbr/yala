@@ -21,6 +21,7 @@ from multiprocessing import Pool
 
 from docopt import docopt
 
+from . import __version__
 from .config import Config
 from .linters import LINTERS
 
@@ -153,5 +154,5 @@ class Main:
 
 def main():
     """Entry point for the console script."""
-    args = docopt(__doc__, version='1.6.0')
+    args = docopt(__doc__, version=__version__)
     Main().run_from_cli(args)

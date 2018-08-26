@@ -6,21 +6,19 @@ YALA - Yet Another Linter Aggregator
 YALA combines many linters to improve the quality of your code. Other projects may come to your mind, but does anyone have all the features below?
 
 Works with latest linters
-    Yala uses linters' outputs and doesn't break on API changes.
+    Yala uses linters' outputs and doesn't break when their APIs change.
 Same defaults
     No changes to linters' default configuration.
 Easy to configure
-    Set any command-line option for any linter (even pylint!) in one INI file: setup.cfg.
-Language-agnostic
-    Add any linter to any language.
-Extensible
-    Just a few lines do add your preferred linter.
+    Set any command-line option for any linter (even pylint!) in setup.cfg.
 Fast
-    Run linters in parallel and sort output by filename and line number.
+    Run linters in parallel.
 
 Current Status
 --------------
-For now, there are some Python linters available: isort, Pylint, Pycodestyle, Pydocstyle, Pyflakes and Radon (cyclomatic complexity and maintainability index).
+For now, the supported Python linters are: isort, Pylint, Pycodestyle and Pydocstyle. There's also an optional support for mypy: if it is installed, it will be automatically detected and used.
+
+
 
 Install
 -------
@@ -34,12 +32,14 @@ If you are willing to hack yala's code, run the command below in this README's f
 
 .. code-block:: bash
 
-  sudo pip3 install -e .[dev]
+  sudo pip3 install --editable .[dev]
 
 
 Usage
 -----
 Just call ``yala`` followed by the files and/or folders to lint.
+
+
 
 
 Configuration
@@ -63,9 +63,8 @@ For example, to disable a specific pylint warning and output grades C and lower 
 
   [yala]
   pylint args = --disable=TODO
-  radon mi args = --min C
 
-Besides `pylint` and `radon mi`, you can define CLI options for `isort`, `pycodestyle`, `pydocstyle`, `pyflakes`, `pylint` and `radon cc` (the names are exactly as they are called in command line).
+Besides `pylint`, you can define CLI options for `isort`, `pycodestyle` and `pydocstyle` (the names are exactly as they are called in command line).
 
 
 Choosing linters

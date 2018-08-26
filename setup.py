@@ -3,6 +3,8 @@ from os import path
 
 from setuptools import setup
 
+from yala import __version__
+
 HERE = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
@@ -11,7 +13,7 @@ with open(path.join(HERE, 'README.rst')) as f:
 
 setup(
     name='yala',
-    version='1.6.0',
+    version=__version__,
     description='Yet Another Linter Aggregator',
     long_description=LONG_DESC,
     url='https://github.com/cemsbr/yala',
@@ -40,7 +42,7 @@ setup(
         'pydocstyle',
         'pylint',
     ],
-    # $ pip install -e .[dev,test]
+    # $ pip install -e .[dev]
     extras_require={
         'dev': [
             # https://bitbucket.org/ned/coveragepy/issues/578/
