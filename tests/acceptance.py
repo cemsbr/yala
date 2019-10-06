@@ -69,3 +69,8 @@ class TestAcceptance(TestCase):
             '5:0|Too many branches (20/12) (R0912, too-many-branches)'
         )
         self._assert_results(expected, 'pylint')
+
+    def test_rest_radon_cc(self):
+        """Check radon cc ouput."""
+        expected = '5:0|high_complexity - D'
+        self._assert_result(expected, 'radon cc')
