@@ -63,7 +63,7 @@ class TestAcceptance(TestCase):
     def test_pylint(self):
         """Check Pylint output."""
         expected = (
-            '1:0|Missing module docstring (C0111, missing-docstring)',
+            '1:0|Missing module docstring (C0114, missing-module-docstring)',
             '1:0|Unused import os (W0611, unused-import)',
             '2:0|Unused import abc (W0611, unused-import)',
             '5:0|Too many branches (20/12) (R0912, too-many-branches)'
