@@ -1,6 +1,6 @@
 """Root logger configuration."""
-from pathlib import Path
 import logging.config
+from pathlib import Path
 
 __version__ = '1.7.0'
 

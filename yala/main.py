@@ -75,7 +75,7 @@ class LinterRunner:
         """Run linter in a subprocess."""
         command = self._get_command()
         process = subprocess.run(command, stdout=subprocess.PIPE,  # nosec
-                                 stderr=subprocess.PIPE)
+                                 stderr=subprocess.PIPE, check=False)
         LOG.info('Finished %s', ' '.join(command))
         stdout, stderr = self._get_output_lines(process)
         return self._linter.parse(stdout), self._parse_stderr(stderr)
@@ -101,6 +101,7 @@ class Main:
         Args:
             config (Config): Config object.
             all_linters (dict): Names and classes of all available linters.
+
         """
         self._classes = all_linters or LINTERS
         self._config = config or Config(self._classes)
@@ -111,6 +112,7 @@ class Main:
 
         Args:
             targets (list): List of files and folders to lint.
+
         """
         LinterRunner.targets = targets
         linters = self._config.get_linter_classes()
@@ -125,6 +127,7 @@ class Main:
 
         Args:
             args (dict): Arguments parsed by docopt.
+
         """
         if args['--dump-config']:
             self._config.print_config()

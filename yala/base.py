@@ -20,6 +20,7 @@ class LinterOutput:
             line (int): Line number.
             msg (str): Explanation of what is wrong.
             col (int): Column where the problem begins.
+
         """
         # Set all attributes in the constructor for convenience.
         # pylint: disable=too-many-arguments
@@ -70,7 +71,6 @@ class Linter(metaclass=ABCMeta):
     @abstractmethod
     def name(cls):
         """Name of this linter. Recommended to be the same as its command."""
-        pass  # pragma: no cover
 
     @property
     def command(self):
@@ -99,7 +99,6 @@ class Linter(metaclass=ABCMeta):
             iterable of Result: Linter results.
 
         """
-        pass  # pragma: no cover
 
     def _get_relative_path(self, full_path):
         """Return the relative path from current path."""
@@ -125,6 +124,7 @@ class Linter(metaclass=ABCMeta):
 
         Return:
             generator: Result instances.
+
         """
         for line in lines:
             match = pattern.match(line)
@@ -139,6 +139,7 @@ class Linter(metaclass=ABCMeta):
 
         Args:
             match: Pattern match.
+
         """
         if isinstance(match_result, dict):
             return LinterOutput(self.name, **match_result)

@@ -25,6 +25,7 @@ class Config:
 
         Args:
             all_linters (dict): Names and classes of all available linters.
+
         """
         self._all_linters = all_linters
         default_cfg = self._read_default_file()
