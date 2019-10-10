@@ -37,6 +37,7 @@ setup(
     packages=['yala'],
     install_requires=[
         'docopt',
+        'pycodestyle',
     ],
     extras_require={
         'all': [
@@ -52,7 +53,6 @@ setup(
         'flake8': ['flake8'],
         'isort': ['isort'],
         'mypy': ['mypy'],
-        'pycodestyle': ['pycodestyle'],
         'pydocstyle': ['pydocstyle'],
         'pyflakes': ['pyflakes'],
         'pylint': ['pylint'],
