@@ -8,12 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.0.0] - 2019-10-10
 
-## Added
+### Added
 - Flake8 support
 - Pyflakes support
 - Option to choose linters to install, or "all" (check README)
 
-## Changed
+### Changed
 - Install only isort and pycodestyle by default. For the old behaviour: `pip install yala[all]`
 
 ## [1.8.0] - 2019-10-06
@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Unused code to parse pyflakes and radon
 - dev: dependency management via requirements file (use pipenv)
 
-[Unreleased]: https://github.com/cemsbr/yala/compare/v1.8.0...HEAD
+[Unreleased]: https://github.com/cemsbr/yala/compare/v1.2.0...HEAD
+[2.0.0]: https://github.com/cemsbr/yala/compare/v1.8.0...v2.0.0
 [1.8.0]: https://github.com/cemsbr/yala/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/cemsbr/yala/compare/v1.6.0...v1.7.0
