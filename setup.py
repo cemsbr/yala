@@ -57,6 +57,16 @@ setup(
         'pyflakes': ['pyflakes'],
         'pylint': ['pylint'],
         'radon': ['radon'],
+        'dev': [
+            'bandit',
+            'coverage',
+            'eradicate',
+            'nose',
+            'pipenv',
+            'rstcheck',
+            'safety',
+            'tox',
+        ]
     },
     package_data={
         'yala': ['setup.cfg', 'logging.ini'],
