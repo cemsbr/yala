@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.0] - 2019-10-10
+
+## Added
+- Flake8 support
+- Pyflakes support
+- Option to choose linters to install, or "all" (check README)
+
+## Changed
+- Install only isort and pycodestyle by default. For the old behaviour: `pip install yala[all]`
+
 ## [1.8.0] - 2019-10-06
 
 ### Added

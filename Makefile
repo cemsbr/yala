@@ -17,7 +17,7 @@ update-deps:
 
 upload: clean
 	python setup.py clean sdist bdist_wheel
-	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+	twine upload dist/*
 
 watch:
 	while [ true ]; do \
