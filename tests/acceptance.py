@@ -50,18 +50,24 @@ class TestAcceptance(TestCase):
         expected = (
             "1:1|F401 'os' imported but unused",
             "2:1|F401 'abc' imported but unused",
-            "5:20|E211 whitespace before '('"
+            "7:20|E211 whitespace before '('"
             )
         self._assert_results(expected, 'flake8')
 
     def test_isort(self):
-        """Check isort ouput."""
+        """Check isort output."""
         expected = 'None:None|Imports are incorrectly sorted.'
         self._assert_result(expected, 'isort')
 
+    def test_mypy(self):
+        """Check mypy output."""
+        expected = "4:None|error: Need type comment for 'untyped_list' " + \
+            '(hint: "untyped_list = ...  # type: List[<type>]")'
+        self._assert_result(expected, 'mypy')
+
     def test_pycodestyle(self):
         """Check pycodestyle output."""
-        expected = "5:20|E211 whitespace before '('"
+        expected = "7:20|E211 whitespace before '('"
         self._assert_result(expected, 'pycodestyle')
 
     def test_pydocstyle(self):
@@ -83,11 +89,11 @@ class TestAcceptance(TestCase):
             '1:0|Missing module docstring (C0114, missing-module-docstring)',
             '1:0|Unused import os (W0611, unused-import)',
             '2:0|Unused import abc (W0611, unused-import)',
-            '5:0|Too many branches (20/12) (R0912, too-many-branches)'
+            '7:0|Too many branches (20/12) (R0912, too-many-branches)'
         )
         self._assert_results(expected, 'pylint')
 
     def test_rest_radon_cc(self):
         """Check radon cc ouput."""
-        expected = '5:0|high_complexity - D'
+        expected = '7:0|high_complexity - D'
         self._assert_result(expected, 'radon cc')

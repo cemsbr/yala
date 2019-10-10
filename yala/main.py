@@ -18,6 +18,7 @@ import subprocess
 import sys
 from itertools import chain
 from multiprocessing import Pool
+from typing import List
 
 from docopt import docopt
 
@@ -32,7 +33,7 @@ class LinterRunner:
     """Run linter and process results."""
 
     config = None
-    targets = []
+    targets = []  # type: List[str]
 
     def __init__(self, linter_class):
         """Set linter class and its configuration."""

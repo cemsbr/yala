@@ -1,6 +1,8 @@
 import os
 import abc
 
+untyped_list = []
+
 
 def high_complexity (arg):
     """High cyclomatic complexity."""

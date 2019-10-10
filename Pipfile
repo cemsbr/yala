@@ -7,6 +7,7 @@ name = "pypi"
 docopt = "*"
 flake8 = "*"
 isort = "*"
+mypy = "*"
 pycodestyle = "*"
 pydocstyle = "*"
 pyflakes = "*"
@@ -22,7 +23,7 @@ rstcheck = "*"
 safety = "*"
 tox = "*"
 nose = "*"
-yala = {editable = true,path = "."}
+yala = {path = ".",editable = true}
 
 [requires]
 python_version = "3.5"

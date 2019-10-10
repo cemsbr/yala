@@ -37,27 +37,26 @@ setup(
     packages=['yala'],
     install_requires=[
         'docopt',
-        'isort',
-        'pycodestyle',
-        'pydocstyle',
-        'pyflakes',
-        'pylint',
-        'radon',
     ],
-    # $ pip install -e .[dev]
     extras_require={
-        'dev': [
-            # https://bitbucket.org/ned/coveragepy/issues/578/
-            # incomplete-file-path-in-xml-report
-            'bandit',
-            'coverage<4.4',
-            'eradicate',
-            'pip-tools',
-            'pipenv',
-            'rstcheck',
-            'safety',
-            'tox',
-        ]
+        'all': [
+            'flake8',
+            'isort',
+            'mypy',
+            'pycodestyle',
+            'pydocstyle',
+            'pyflakes',
+            'pylint',
+            'radon',
+        ],
+        'flake8': ['flake8'],
+        'isort': ['isort'],
+        'mypy': ['mypy'],
+        'pycodestyle': ['pycodestyle'],
+        'pydocstyle': ['pydocstyle'],
+        'pyflakes': ['pyflakes'],
+        'pylint': ['pylint'],
+        'radon': ['radon'],
     },
     package_data={
         'yala': ['setup.cfg', 'logging.ini'],
