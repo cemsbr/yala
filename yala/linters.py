@@ -78,6 +78,20 @@ class Pydocstyle(Linter):
                 yield LinterOutput(self.name, path, msg, line_nr)
 
 
+class Pyflakes(Linter):
+    """Pyflakes parser."""
+
+    name = 'pyflakes'
+
+    def parse(self, lines):
+        """Get :class:`base.Result` parameters using regex."""
+        pattern = re.compile(r'''
+                             ^(?P<path>.+?)
+                             :(?P<line_nr>\d+?)
+                             :\ (?P<msg>.+)$''', re.VERBOSE)
+        return self._parse_by_pattern(lines, pattern)
+
+
 class Pylint(Linter):
     """Pylint parser."""
 

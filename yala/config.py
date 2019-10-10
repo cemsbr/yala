@@ -36,7 +36,7 @@ class Config:
         self._set_linters()
 
     def _set_linters(self):
-        """Use user linters or all available when not specified."""
+        """Use user-specified linters or all of them when not specified."""
         if 'linters' in self._config:
             self.user_linters = list(self._parse_cfg_linters())
             self.linters = {linter: self._all_linters[linter]

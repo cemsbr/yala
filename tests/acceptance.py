@@ -60,6 +60,14 @@ class TestAcceptance(TestCase):
         expected = '1:None|D100: Missing docstring in public module'
         self._assert_result(expected, 'pydocstyle')
 
+    def test_pyflakes(self):
+        """Check Pyflakes output."""
+        expected = (
+            "1:None|'os' imported but unused",
+            "2:None|'abc' imported but unused"
+        )
+        self._assert_results(expected, 'pyflakes')
+
     def test_pylint(self):
         """Check Pylint output."""
         expected = (

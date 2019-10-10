@@ -40,6 +40,7 @@ setup(
         'isort',
         'pycodestyle',
         'pydocstyle',
+        'pyflakes',
         'pylint',
         'radon',
     ],

@@ -10,6 +10,7 @@ pycodestyle = "*"
 pydocstyle = "*"
 pylint = "*"
 radon = "*"
+pyflakes = "*"
 
 [dev-packages]
 bandit = "*"
@@ -20,7 +21,7 @@ rstcheck = "*"
 safety = "*"
 tox = "*"
 nose = "*"
-yala = {path = ".",editable = true}
+yala = {editable = true,path = "."}
 
 [requires]
 python_version = "3.5"
