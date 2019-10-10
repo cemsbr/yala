@@ -1,8 +1,4 @@
 language: python
-python:
-  - '3.7'
-  - '3.6'
-  - '3.5'
 branches:
   only:
     - dev
@@ -12,3 +8,11 @@ install:
 cache: pip
 script:
   - tox
+matrix:
+  include:
+    - python: 3.7
+      env: TOXENV=py37
+    - python: 3.6
+      env: TOXENV=py36
+    - python: 3.5
+      env: TOXENV=py35
