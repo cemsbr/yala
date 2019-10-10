@@ -5,12 +5,13 @@ name = "pypi"
 
 [packages]
 docopt = "*"
+flake8 = "*"
 isort = "*"
 pycodestyle = "*"
 pydocstyle = "*"
+pyflakes = "*"
 pylint = "*"
 radon = "*"
-pyflakes = "*"
 
 [dev-packages]
 bandit = "*"

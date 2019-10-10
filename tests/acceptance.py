@@ -45,6 +45,15 @@ class TestAcceptance(TestCase):
         arg = self._exit.call_args_list[0][0][0]
         self.assertTrue(arg, 'Exit argument should not be empty')
 
+    def test_flake8(self):
+        """Check pycodestyle output."""
+        expected = (
+            "1:1|F401 'os' imported but unused",
+            "2:1|F401 'abc' imported but unused",
+            "5:20|E211 whitespace before '('"
+            )
+        self._assert_results(expected, 'flake8')
+
     def test_isort(self):
         """Check isort ouput."""
         expected = 'None:None|Imports are incorrectly sorted.'

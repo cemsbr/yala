@@ -6,6 +6,21 @@ import re
 from .base import Linter, LinterOutput
 
 
+class Flake8(Linter):
+    """Parser for flake8."""
+
+    name = 'flake8'
+
+    def parse(self, lines):
+        """Get :class:`base.Result` parameters using regex."""
+        pattern = re.compile(r'''
+                             ^(?P<path>.+?)
+                             :(?P<line_nr>\d+?)
+                             :(?P<col>\d+?)
+                             :\ (?P<msg>.+)$''', re.VERBOSE)
+        return self._parse_by_pattern(lines, pattern)
+
+
 class Isort(Linter):
     """Isort parser."""
 
