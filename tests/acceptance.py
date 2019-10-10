@@ -37,8 +37,19 @@ class TestAcceptance(TestCase):
             self._assert_result(line, linter_name)
 
     def _assert_result(self, line, linter_name):
-        full_line = 'tests_data/fake_code.py|{} [{}]'.format(line, linter_name)
+        full_line = self._complete_output_line(line, linter_name)
         self.assertIn(full_line, self._output)
+
+    def _assert_any_result(self, lines, linter_name):
+        for line in lines:
+            full_line = self._complete_output_line(line, linter_name)
+            if full_line in self._output:
+                return
+        self.fail('None found: "{}"'.format('", "'.join(lines)))
+
+    @staticmethod
+    def _complete_output_line(line, linter_name):
+        return 'tests_data/fake_code.py|{} [{}]'.format(line, linter_name)
 
     def test_exit_error(self):
         """Should exit with error if there's linter output."""
@@ -63,7 +74,10 @@ class TestAcceptance(TestCase):
         """Check mypy output."""
         expected = "4:None|error: Need type comment for 'untyped_list' " + \
             '(hint: "untyped_list = ...  # type: List[<type>]")'
-        self._assert_result(expected, 'mypy')
+        expected_py37 = '4:None|error: Need type annotation for ' + \
+            '\'untyped_list\' (hint: "untyped_list: List[<type>] = ...")'
+        possible_results = expected, expected_py37
+        self._assert_any_result(possible_results, 'mypy')
 
     def test_pycodestyle(self):
         """Check pycodestyle output."""
