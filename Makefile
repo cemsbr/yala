@@ -16,7 +16,8 @@ update-deps:
 	pipenv update
 
 upload: clean
-	python setup.py clean sdist bdist_wheel upload -s
+	python setup.py clean sdist bdist_wheel
+	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 watch:
 	while [ true ]; do \
