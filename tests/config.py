@@ -27,6 +27,7 @@ class TestConfig(TestCase):
         config = self._get_config(all_linters)
         config.print_config()
         expected_lines = [
+            '[yala]',
             'linters: linter a, linter b',
             'isort args: --recursive --check',
             'pylint args: --msg-template="{path}:{msg}'
@@ -45,6 +46,7 @@ class TestConfig(TestCase):
         config = self._get_config(all_linters, user_config)
         config.print_config()
         expected_lines = [
+            '[yala]',
             'linters: linter b',
             'isort args: --recursive --check',
             'pylint args: --msg-template="{path}:{msg}'
