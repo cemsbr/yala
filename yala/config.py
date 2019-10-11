@@ -97,7 +97,7 @@ class Config:
         # Reverse order so parent folder's file is overridden.
         for user_file in reversed(user_files):
             if user_file.is_file():
-                LOG.info('Reading %s', user_file)
+                LOG.debug('Reading %s', user_file)
                 user_cfg.read(str(user_file))
         return user_cfg
 

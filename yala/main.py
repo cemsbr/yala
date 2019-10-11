@@ -77,7 +77,7 @@ class LinterRunner:
         command = self._get_command()
         process = subprocess.run(command, stdout=subprocess.PIPE,  # nosec
                                  stderr=subprocess.PIPE, check=False)
-        LOG.info('Finished %s', ' '.join(command))
+        LOG.info('Finished %s', self._linter.name)
         stdout, stderr = self._get_output_lines(process)
         return self._linter.parse(stdout), self._parse_stderr(stderr)
 
