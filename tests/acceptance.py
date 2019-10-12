@@ -1,4 +1,5 @@
 """Acceptance tests for yala executable."""
+import re
 from concurrent.futures import ThreadPoolExecutor
 from io import StringIO
 from unittest import TestCase
@@ -37,19 +38,25 @@ class TestAcceptance(TestCase):
             self._assert_result(line, linter_name)
 
     def _assert_result(self, line, linter_name):
-        full_line = self._complete_output_line(line, linter_name)
-        self.assertIn(full_line, self._output)
+        self.assertTrue(self._output_has_line(line, linter_name),
+                        'Couldn\'t match:\n  {}\nOutput:\n  {}'.format(
+                            line, '\n  '.join(self._output)))
 
     def _assert_any_result(self, lines, linter_name):
-        for line in lines:
-            full_line = self._complete_output_line(line, linter_name)
-            if full_line in self._output:
-                return
-        self.fail('None found: "{}"'.format('", "'.join(lines)))
+        any_line = any(self._output_has_line(l, linter_name) for l in lines)
+        self.assertTrue(any_line, 'None found:\n  {}\nOutput:\n  {}'.format(
+            '\n  '.join(lines), '\n  '.join(self._output)))
+
+    def _output_has_line(self, line, linter_name):
+        expected_regex = self._get_expected_regex(line, linter_name)
+        return any(re.match(expected_regex, out) for out in self._output)
 
     @staticmethod
-    def _complete_output_line(line, linter_name):
-        return 'tests_data/fake_code.py|{} [{}]'.format(line, linter_name)
+    def _get_expected_regex(line, linter_name):
+        """Return a regex to match both Linux and Windows paths."""
+        regex = r'tests_data[/\\]fake_code.py\|{} \[{}\]'
+        escaped_output = re.escape(line)
+        return regex.format(escaped_output, linter_name)
 
     def test_exit_error(self):
         """Should exit with error if there's linter output."""

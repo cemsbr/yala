@@ -30,8 +30,8 @@ class TestLinterRunner(unittest.TestCase):
         cls = self._mock_linter_class(name)
         mock_config.get_linter_classes.return_value = [cls]
         with patch('yala.main.subprocess.run', side_effect=FileNotFoundError):
-            LinterRunner.config = mock_config
-            return LinterRunner.run(cls)
+            linter_cfg_tgts = cls, mock_config, []
+            return LinterRunner.run(linter_cfg_tgts)
 
     @staticmethod
     def _mock_linter_class(name):

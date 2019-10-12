@@ -84,7 +84,7 @@ class LinterRunner:
 
     @staticmethod
     def _get_output_lines(process):
-        return [(line for line in output.decode('utf-8').split('\n') if line)
+        return [(line for line in output.decode('utf-8').splitlines() if line)
                 for output in (process.stdout, process.stderr)]
 
     def _parse_stderr(self, lines):
