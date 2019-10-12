@@ -31,7 +31,7 @@ class Isort(Linter):
         # E.g. "ERROR: /my/path/main.py Imports are incorrectly sorted."
         pattern = re.compile(r'''
                              ^.+?
-                             :\ (?P<full_path>.+?)
+                             :\ (?P<full_path>.+\.py)
                              \ (?P<msg>.+)$''', re.VERBOSE)
         return self._parse_by_pattern(lines, pattern)
 
