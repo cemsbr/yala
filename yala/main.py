@@ -41,8 +41,9 @@ class LinterRunner:
         self._linter = linter_class()
 
     @classmethod
-    def run(cls, linter_class):
+    def run(cls, linter_cfg_tgts):
         """Run a linter and return the results."""
+        linter_class, cls.config, cls.targets = linter_cfg_tgts
         runner = cls(linter_class)
         return runner.get_results()
 
@@ -118,7 +119,8 @@ class Main:
         LinterRunner.targets = targets
         linters = self._config.get_linter_classes()
         with Pool() as pool:
-            out_err_none = pool.map(LinterRunner.run, linters)
+            linter_cfg_tgts = ((l, self._config, targets) for l in linters)
+            out_err_none = pool.map(LinterRunner.run, linter_cfg_tgts)
         out_err = [item for item in out_err_none if item is not None]
         stdout, stderr = zip(*out_err)
         return sorted(chain.from_iterable(stdout)), chain.from_iterable(stderr)
