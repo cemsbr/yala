@@ -40,14 +40,13 @@ setup(
         'docopt',
         'isort',
         'pycodestyle',
+        'pylint',
     ],
     extras_require={
         'all': [
-            'flake8',
             'mypy',
             'pydocstyle',
             'pyflakes',
-            'pylint',
             'radon',
         ],
         'flake8': ['flake8'],
