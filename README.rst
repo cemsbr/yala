@@ -3,6 +3,8 @@ YALA - Yet Another Linter Aggregator
 
 |build| |coveralls| |codecov| |codacy| |issue_time|
 
+|version| |downloads|
+
 YALA combines many linters to improve the quality of your code. Other projects may come to your mind, but does anyone have all the features below?
 
 Works with latest linters
@@ -143,3 +145,10 @@ Check the file *yala/linters.py* and feel free to ask for help.
 
 .. |issue_time| image:: http://isitmaintained.com/badge/resolution/cemsbr/yala.svg
                :target: http://isitmaintained.com/project/cemsbr/yala
+
+.. |version| image:: https://img.shields.io/pypi/v/yala
+            :alt: PyPI
+            :target: https://pypi.org/project/yala/
+
+.. |downloads| image:: https://img.shields.io/pypi/dm/yala
+              :target: https://pypi.org/project/yala/
