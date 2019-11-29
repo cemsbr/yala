@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.0] - 2019-11-28
+### Added
+- Pylint as default (required) linter (as in v1)
+
 ## [2.1.0] - 2019-10-12
 ### Added
 - Windows support
@@ -33,7 +37,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Unused code to parse pyflakes and radon
 - dev: dependency management via requirements file (use pipenv)
 
-[Unreleased]: https://github.com/cemsbr/yala/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/cemsbr/yala/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/cemsbr/yala/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/cemsbr/yala/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/cemsbr/yala/compare/v1.8.0...v2.0.0
 [1.8.0]: https://github.com/cemsbr/yala/compare/v1.7.0...v1.8.0
