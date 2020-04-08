@@ -61,13 +61,11 @@ Just call ``yala`` followed by the files and/or folders to lint.
 Configuration
 -------------
 
-Besides the configuration of each linter, as in their docs, you can specify other options in *setup.cfg*.
+Besides the standard configuration files of each linter, as in their docs, you can specify any command-line option in *setup.cfg* with yala.
 
-It's possible to define command line arguments for linters in *setup.cfg*, which is particularly useful for *pylint*, a linter that ignores this file and requires you to write an extra one only for itself.
+Writing command-line arguments for linters in *setup.cfg* is particularly useful for *pylint* because it ignores *setup.cfg* and requires you to write an extra file. Now, you don't have to.
 
-The default configuration file is ``yala/setup.cfg`` that you can copy and customize.
-
-You can have this file in upper directories and override it in lower directories if needed.
+The default configuration file is in ``yala/setup.cfg``. You can copy it to your project's root folder and customize it. If you need other configuration for a nested directory, just create another file there.
 
 
 Linters' options
@@ -79,6 +77,7 @@ For example, to disable a specific pylint warning and output grades C and lower 
 
   [yala]
   pylint args = --disable=TODO
+  radon mi args = --min C
 
 Besides `pylint`, you can define CLI options for `isort`, `pycodestyle` and `pydocstyle` (the names are exactly as they are called in command line).
 
