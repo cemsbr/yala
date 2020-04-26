@@ -103,7 +103,8 @@ class Pyflakes(Linter):
         pattern = re.compile(r'''
                              ^(?P<path>.+?)
                              :(?P<line_nr>\d+?)
-                             :\ (?P<msg>.+)$''', re.VERBOSE)
+                             :(?P<col>\d+?)?
+                             \ (?P<msg>.+)$''', re.VERBOSE)
         return self._parse_by_pattern(lines, pattern)
 
 

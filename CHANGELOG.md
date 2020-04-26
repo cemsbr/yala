@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Multiline results in pylint were not being captured, e.g. bad-whitespace and
   bad-continuation.
+- Updated pyflakes output parser: now there's a column number.
 
 ### Changed
 - Pipfile has Python 3.8 now that it is available in Ubuntu LTS 20.04. However,

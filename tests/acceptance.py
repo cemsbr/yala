@@ -97,11 +97,15 @@ class TestAcceptance(TestCase):
 
     def test_pyflakes(self):
         """Check Pyflakes output."""
-        expected = (
-            "1:None|'os' imported but unused",
-            "2:None|'abc' imported but unused"
-        )
-        self._assert_results(expected, 'pyflakes')
+        expected_any = (
+            "1:1|'os' imported but unused",     # pyflakes 2.2.0
+            "1:None|'os' imported but unused")  # pyflakes 2.1.1
+        self._assert_any_result(expected_any, 'pyflakes')
+
+        expected_any = (
+            "2:1|'abc' imported but unused",
+            "2:None|'abc' imported but unused")
+        self._assert_any_result(expected_any, 'pyflakes')
 
     def test_pylint(self):
         """Check Pylint output."""
