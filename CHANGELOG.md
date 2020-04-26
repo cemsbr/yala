@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.1] - 2020-04-26
+### Fixed
+- Multiline results in pylint were not being captured, e.g. bad-whitespace and
+  bad-continuation.
+
+### Changed
+- Pipfile has Python 3.8 now that it is available in Ubuntu LTS 20.04. However,
+  CI still tests under 3.5, 3.6, and 3.7, too.
+
 ## [2.2.0] - 2019-11-28
 ### Added
 - Pylint as default (required) linter (as in v1)
@@ -37,7 +46,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Unused code to parse pyflakes and radon
 - dev: dependency management via requirements file (use pipenv)
 
-[Unreleased]: https://github.com/cemsbr/yala/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/cemsbr/yala/compare/v2.2.1...HEAD
+[2.3.0]: https://github.com/cemsbr/yala/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/cemsbr/yala/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/cemsbr/yala/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/cemsbr/yala/compare/v1.8.0...v2.0.0

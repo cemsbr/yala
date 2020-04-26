@@ -28,33 +28,32 @@ class TestAcceptance(TestCase):
         pool_mock.return_value = ThreadPoolExecutor()
         with patch('yala.main.sys.argv', ['yala', 'tests_data/fake_code.py']):
             main()
-        output = stdout_mock.getvalue()
-        # Remove empty last line due to trailing '\n'
-        cls._output = output.split('\n')[:-1]
+        cls._output = stdout_mock.getvalue()
 
     def _assert_results(self, lines, linter_name):
         """Assert all lines are in the output."""
         for line in lines:
             self._assert_result(line, linter_name)
 
-    def _assert_result(self, line, linter_name):
-        self.assertTrue(self._output_has_line(line, linter_name),
-                        'Couldn\'t match:\n  {}\nOutput:\n  {}'.format(
-                            line, '\n  '.join(self._output)))
+    def _assert_result(self, result, linter_name):
+        self.assertTrue(self._output_has_result(result, linter_name),
+                        'Couldn\'t match:\n{}\nOutput:\n{}'.format(
+                            result, self._output))
 
-    def _assert_any_result(self, lines, linter_name):
-        any_line = any(self._output_has_line(l, linter_name) for l in lines)
-        self.assertTrue(any_line, 'None found:\n  {}\nOutput:\n  {}'.format(
-            '\n  '.join(lines), '\n  '.join(self._output)))
+    def _assert_any_result(self, results, linter_name):
+        first_result = any(self._output_has_result(r, linter_name)
+                           for r in results)
+        self.assertTrue(first_result, 'None matched:\n{}\nOutput:\n{}'
+                        .format('\n'.join(results), self._output))
 
-    def _output_has_line(self, line, linter_name):
-        expected_regex = self._get_expected_regex(line, linter_name)
-        return any(re.match(expected_regex, out) for out in self._output)
+    def _output_has_result(self, result, linter_name):
+        expected_regex = self._get_expected_regex(result, linter_name)
+        return re.match(expected_regex, self._output, re.M | re.S) is not None
 
     @staticmethod
     def _get_expected_regex(line, linter_name):
         """Return a regex to match both Linux and Windows paths."""
-        regex = r'tests_data[/\\]fake_code.py\|{} \[{}\]'
+        regex = r'.*?^tests_data[/\\]fake_code.py\|{} \[{}\]$'
         escaped_output = re.escape(line)
         return regex.format(escaped_output, linter_name)
 
@@ -110,7 +109,10 @@ class TestAcceptance(TestCase):
             '1:0|Missing module docstring (C0114, missing-module-docstring)',
             '1:0|Unused import os (W0611, unused-import)',
             '2:0|Unused import abc (W0611, unused-import)',
-            '7:0|Too many branches (20/12) (R0912, too-many-branches)'
+            '7:0|Too many branches (20/12) (R0912, too-many-branches)',
+            '7:20|No space allowed before bracket\n'
+            'def high_complexity (arg):\n'
+            '                    ^ (C0326, bad-whitespace)'
         )
         self._assert_results(expected, 'pylint')
 

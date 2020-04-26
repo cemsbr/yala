@@ -3,7 +3,6 @@ help:
 	@echo '======='
 	@echo '      clean:  Remove generated files.'
 	@echo '       help:  This message.'
-	@echo "update-deps:  Update dev packages' pinned versions."
 	@echo '     upload:  Upload signed Python package to PyPI.'
 	@echo -n '      watch:  When code changes, run tests.'
 	@echo -n '  sonarqube:  Update SonarQube code metrics.'
@@ -11,9 +10,6 @@ help:
 
 clean:
 	rm -rf .eggs/ .tox/ build/ dist/ yala.egg-info/
-
-update-deps:
-	pipenv update
 
 upload: clean
 	python setup.py clean sdist bdist_wheel

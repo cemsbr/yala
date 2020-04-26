@@ -126,13 +126,18 @@ class Linter(metaclass=ABCMeta):
             generator: Result instances.
 
         """
+        buffer = ''  # lines is an iterable, but there may be multiline matches
         for line in lines:
-            match = pattern.match(line)
+            buffer += line
+            match = pattern.match(buffer)
             if match:
+                buffer = ''  # clear buffer after a match
                 params = match.groupdict()
                 if not params:
                     params = match.groups()
                 yield self._create_output_from_match(params)
+            else:
+                buffer += '\n'  # keep lines separated by a newline
 
     def _create_output_from_match(self, match_result):
         """Create Result instance from pattern match results.
