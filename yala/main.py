@@ -119,7 +119,8 @@ class Main:
         LinterRunner.targets = targets
         linters = self._config.get_linter_classes()
         with Pool() as pool:
-            linter_cfg_tgts = ((l, self._config, targets) for l in linters)
+            linter_cfg_tgts = ((linter, self._config, targets)
+                               for linter in linters)
             out_err_none = pool.map(LinterRunner.run, linter_cfg_tgts)
         out_err = [item for item in out_err_none if item is not None]
         stdout, stderr = zip(*out_err)
