@@ -73,7 +73,7 @@ class TestAcceptance(TestCase):
 
     def test_isort(self):
         """Check isort output."""
-        expected = 'None:None|Imports are incorrectly sorted.'
+        expected = 'None:None|Imports are incorrectly sorted and/or formatted.'
         self._assert_result(expected, 'isort')
 
     def test_mypy(self):
@@ -114,9 +114,6 @@ class TestAcceptance(TestCase):
             '1:0|Unused import os (W0611, unused-import)',
             '2:0|Unused import abc (W0611, unused-import)',
             '7:0|Too many branches (20/12) (R0912, too-many-branches)',
-            '7:20|No space allowed before bracket\n'
-            'def high_complexity (arg):\n'
-            '                    ^ (C0326, bad-whitespace)'
         )
         self._assert_results(expected, 'pylint')
 

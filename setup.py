@@ -38,7 +38,7 @@ setup(
     packages=['yala'],
     install_requires=[
         'docopt',
-        'isort',
+        'isort>=5',  # deprecated --recursive flag
         'pycodestyle',
         'pylint',
     ],

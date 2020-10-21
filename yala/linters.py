@@ -11,14 +11,14 @@ class Flake8(Linter):
 
     name = 'flake8'
 
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
         """Get :class:`base.Result` parameters using regex."""
         pattern = re.compile(r'''
                              ^(?P<path>.+?)
                              :(?P<line_nr>\d+?)
                              :(?P<col>\d+?)
                              :\ (?P<msg>.+)$''', re.VERBOSE)
-        return self._parse_by_pattern(lines, pattern)
+        return self._parse_by_pattern(stdout_lines, pattern), stderr_lines
 
 
 class Isort(Linter):
@@ -26,14 +26,14 @@ class Isort(Linter):
 
     name = 'isort'
 
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
         """Get full path and message from each output line."""
         # E.g. "ERROR: /my/path/main.py Imports are incorrectly sorted."
         pattern = re.compile(r'''
                              ^.+?
                              :\ (?P<full_path>.+\.py)
                              \ (?P<msg>.+)$''', re.VERBOSE)
-        return self._parse_by_pattern(lines, pattern)
+        return self._parse_by_pattern(stderr_lines, pattern), stdout_lines
 
     def _create_output_from_match(self, match_result):
         """As isort outputs full path, we change it to relative path."""
@@ -47,14 +47,14 @@ class Pycodestyle(Linter):
 
     name = 'pycodestyle'
 
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
         """Get :class:`base.Result` parameters using regex."""
         pattern = re.compile(r'''
                              ^(?P<path>.+?)
                              :(?P<line_nr>\d+?)
                              :(?P<col>\d+?)
                              :\ (?P<msg>.+)$''', re.VERBOSE)
-        return self._parse_by_pattern(lines, pattern)
+        return self._parse_by_pattern(stdout_lines, pattern), stderr_lines
 
 
 class Mypy(Linter):
@@ -62,13 +62,13 @@ class Mypy(Linter):
 
     name = 'mypy'
 
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
         """Get :class:`base.Result` parameters using regex."""
         pattern = re.compile(r'''
                              ^(?P<path>.+?)
                              :(?P<line_nr>\d+?)
                              :\ (?P<msg>.+)$''', re.VERBOSE)
-        return self._parse_by_pattern(lines, pattern)
+        return self._parse_by_pattern(stdout_lines, pattern), stderr_lines
 
 
 class Pydocstyle(Linter):
@@ -76,7 +76,11 @@ class Pydocstyle(Linter):
 
     name = 'pydocstyle'
 
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
+        """Parse stdout and stderr lines."""
+        return self._parse(stdout_lines), stderr_lines
+
+    def _parse(self, lines):
         """Get :class:`base.Result` parameters using regex.
 
         There are 2 lines for each pydocstyle result:
@@ -98,14 +102,14 @@ class Pyflakes(Linter):
 
     name = 'pyflakes'
 
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
         """Get :class:`base.Result` parameters using regex."""
         pattern = re.compile(r'''
                              ^(?P<path>.+?)
                              :(?P<line_nr>\d+?)
                              :(?P<col>\d+?)?
                              \ (?P<msg>.+)$''', re.VERBOSE)
-        return self._parse_by_pattern(lines, pattern)
+        return self._parse_by_pattern(stdout_lines, pattern), stderr_lines
 
 
 class Pylint(Linter):
@@ -113,14 +117,14 @@ class Pylint(Linter):
 
     name = 'pylint'
 
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
         """Get :class:`base.Result` parameters using regex."""
         pattern = re.compile(r'''
                              .*?^(?P<path>[^\n]+?)
                              :(?P<msg>.+)
                              :(?P<line_nr>\d+?)
                              :(?P<col>\d+?)$''', re.X | re.M | re.S)
-        return self._parse_by_pattern(lines, pattern)
+        return self._parse_by_pattern(stdout_lines, pattern), stderr_lines
 
 
 class RadonCC(Linter):
@@ -128,7 +132,11 @@ class RadonCC(Linter):
 
     name = 'radon cc'
 
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
+        """Parse stdout and stderr lines."""
+        return self._parse(stdout_lines), stderr_lines
+
+    def _parse(self, lines):
         """Get :class:`base.Result` parameters using regex.
 
         The output has one line with the file path followed by others with
@@ -157,12 +165,12 @@ class RadonMI(Linter):
 
     name = 'radon mi'
 
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
         """Get :class:`base.Result` parameters using regex."""
         pattern = re.compile(r'''
                              ^(?P<path>.+)
                              \ -\ (?P<msg>[A-F])$''', re.VERBOSE)
-        return self._parse_by_pattern(lines, pattern)
+        return self._parse_by_pattern(stdout_lines, pattern), stderr_lines
 
 
 #: dict: All Linter subclasses indexed by class name

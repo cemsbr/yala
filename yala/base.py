@@ -89,14 +89,16 @@ class Linter(metaclass=ABCMeta):
         return self.command
 
     @abstractmethod
-    def parse(self, lines):
+    def parse(self, stdout_lines, stderr_lines):
         """Parse linter output and return results.
 
         Args:
-            lines (iterable): Output lines.
+            stdout_lines (iterable): Linter's standard output lines.
+            stderr_lines (iterable): Linter's standard error lines.
 
         Returns:
-            iterable of Result: Linter results.
+            iterable of Result: Linter results to print to stdout.
+            iterable of str: Lines to print to stderr.
 
         """
 
