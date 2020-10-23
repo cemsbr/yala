@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0] - 2020-10-23
+## Changed
+- Pylint's duplicate-code is not disabled anymore, since its parser has multi-line support.
+- For yala devs: now, linter parsers receive both stdout and stderr. Reason: isort 5 prints results to stderr.
+
+## Fixed
+- Better support for isort 5:
+  - No more `--recursive` flag;
+  - Its output is now read from stderr instead of stdout.
+
+## Removed
+- Python 3.5 support (besides EOL, no isort-5 support)
+
 ## [2.2.1] - 2020-04-26
 ### Fixed
 - Multiline results in pylint were not being captured, e.g. bad-whitespace and
@@ -47,7 +60,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Unused code to parse pyflakes and radon
 - dev: dependency management via requirements file (use pipenv)
 
-[Unreleased]: https://github.com/cemsbr/yala/compare/v2.2.1...HEAD
+[Unreleased]: https://github.com/cemsbr/yala/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/cemsbr/yala/compare/v2.2.1...v3.0.0
 [2.2.1]: https://github.com/cemsbr/yala/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/cemsbr/yala/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/cemsbr/yala/compare/v2.0.0...v2.1.0
