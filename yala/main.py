@@ -56,7 +56,7 @@ class LinterRunner:
         try:
             stdout, stderr = self._lint()
             # Can't return a generator from a subprocess
-            return list(stdout), list(stderr)
+            return list(stdout), self._format_stderr(stderr)
         except FileNotFoundError as exception:
             # Error if the linter was not found but was chosen by the user
             if self._linter.name in self.config.user_linters:
@@ -87,7 +87,7 @@ class LinterRunner:
         return [(line for line in output.decode('utf-8').splitlines() if line)
                 for output in (process.stdout, process.stderr)]
 
-    def _parse_stderr(self, lines):
+    def _format_stderr(self, lines):
         return ['[{}] {}'.format(self._linter.name, line) for line in lines]
 
 

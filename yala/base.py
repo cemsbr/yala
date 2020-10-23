@@ -97,7 +97,7 @@ class Linter(metaclass=ABCMeta):
             stderr_lines (iterable): Linter's standard error lines.
 
         Returns:
-            iterable of Result: Linter results to print to stdout.
+            iterable of LinterOutput: Linter results to print to stdout.
             iterable of str: Lines to print to stderr.
 
         """
@@ -113,19 +113,19 @@ class Linter(metaclass=ABCMeta):
         return str(rel_path)
 
     def _parse_by_pattern(self, lines, pattern):
-        """Match pattern line by line and return Results.
+        """Match pattern line by line and return LinterOutputs.
 
         Use ``_create_output_from_match`` to convert pattern match groups to
-        Result instances.
+        LinterOutput instances.
 
         Args:
             lines (iterable): Output lines to be parsed.
             pattern: Compiled pattern to match against lines.
             result_fn (function): Receive results of one match and return a
-                Result.
+                LinterOutput.
 
         Return:
-            generator: Result instances.
+            generator: LinterOutput instances.
 
         """
         buffer = ''  # lines is an iterable, but there may be multiline matches
@@ -142,7 +142,7 @@ class Linter(metaclass=ABCMeta):
                 buffer += '\n'  # keep lines separated by a newline
 
     def _create_output_from_match(self, match_result):
-        """Create Result instance from pattern match results.
+        """Create LinterOutput instance from pattern match results.
 
         Args:
             match: Pattern match.
