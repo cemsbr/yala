@@ -32,7 +32,7 @@ Currently supported Python tools:
 
 Install
 -------
-Tested with Python >= 3.5.
+Tested with Python >= 3.6.
 
 .. code-block:: bash
 

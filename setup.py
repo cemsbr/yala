@@ -49,7 +49,7 @@ setup(
             'pyflakes',
             'radon',
         ],
-        'flake8': ['flake8'],
+        'flake8': ['flake8', 'flake8-polyfill'],
         'mypy': ['mypy'],
         'pydocstyle': ['pydocstyle'],
         'pyflakes': ['pyflakes'],
