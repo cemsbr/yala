@@ -31,8 +31,7 @@ class TestConfig(TestCase):
             'linters: linter a, linter b',
             'isort args: --check',
             'pylint args: --msg-template="{path}:{msg}'
-            ' ({msg_id}, {symbol}):{line}:{column}"'
-            ' --disable=duplicate-code',
+            ' ({msg_id}, {symbol}):{line}:{column}"',
             'radon cc args: --min D',
             'radon mi args: --min D']
         self.assertSequenceEqual(expected_lines,
@@ -50,8 +49,7 @@ class TestConfig(TestCase):
             'linters: linter b',
             'isort args: --check',
             'pylint args: --msg-template="{path}:{msg}'
-            ' ({msg_id}, {symbol}):{line}:{column}"'
-            ' --disable=duplicate-code',
+            ' ({msg_id}, {symbol}):{line}:{column}"',
             'radon cc args: --min D',
             'radon mi args: --min D']
         self.assertSequenceEqual(expected_lines,
