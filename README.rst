@@ -32,16 +32,20 @@ Currently supported Python tools:
 
 Install
 -------
-Tested with Python >= 3.6.
+Tested with Python >= 3.6. You can specify multiple linters separated by commas:
+
+- ``yala`` installs isort, pycodestyle, and pylint (minimal install);
+- ``yala[all]`` adds *mypy*, *pydocstyle*, *pyflakes*, and *radon*;
+- ``yala[all,flake8]`` also adds *flake8*;
 
 .. code-block:: bash
 
-  # Minimal: isort and pycodestyle
+  # Minimal: isort, pycodestyle and pylint
   sudo pip3 install --upgrade yala
-  # OR all supported linters
+  # OR (almost) all supported linters
   sudo pip3 install --upgrade yala[all]
-  # OR choose your linters (+isort and pycodestyle)
-  sudo pip3 install --upgrade yala[mypy,pylint]
+  # OR choose your linters (+isort, pycodestyle and pylint)
+  sudo pip3 install --upgrade yala[mypy,radon]
 
 If you are willing to hack yala's code, run the command below in this README's folder:
 
@@ -79,7 +83,7 @@ For example, to disable a specific pylint warning and output grades C and lower 
   pylint args = --disable=TODO
   radon mi args = --min C
 
-Besides `pylint`, you can define CLI options for `isort`, `pycodestyle` and `pydocstyle` (the names are exactly as they are called in command line).
+Besides `pylint`, you can define CLI options for `isort`, `pycodestyle`, `pydocstyle`, etc (the names are exactly as they are called in command line).
 
 
 Choosing linters
@@ -109,12 +113,12 @@ Or even a mix of both: multiple linters in multiple lines.
 Example
 .......
 
-Run pydocstyle and pylint without missing-docstring errors (besides isort and
-pycodestyle that are installed by default):
+Run pydocstyle and pylint without missing-docstring errors (besides isort,
+pycodestyle, and pylint that are installed by default):
 
 .. code-block:: sh
 
-  pip install --upgrade yala[pycodestyle,pylint]
+  pip install --upgrade yala[pydocstyle]
 
 .. code-block:: ini
 

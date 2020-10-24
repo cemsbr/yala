@@ -59,7 +59,6 @@ setup(
             'bandit',
             'coverage',
             'eradicate',
-            'pipenv',
             'rstcheck',
             'safety',
             'tox',
