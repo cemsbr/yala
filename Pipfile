@@ -4,26 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-docopt = "*"
-flake8 = "*"
-isort = "*"
-mypy = "*"
-pycodestyle = "*"
-pydocstyle = "*"
-pyflakes = "*"
-pylint = "*"
-radon = "*"
+yala = {extras = ["all", "flake8"], path = "."}
 
 [dev-packages]
-bandit = "*"
-coverage = "<4.4"
-eradicate = "*"
-pipenv = "*"
-rstcheck = "*"
-safety = "*"
-tox = "*"
-nose = "*"
-yala = {path = ".",editable = true}
+yala = {editable = true, extras = ["all", "dev", "flake8"], path = "."}
 
 [requires]
 python_version = "3.8"
