@@ -29,7 +29,7 @@ class TestConfig(TestCase):
         expected_lines = [
             '[yala]',
             'linters: linter a, linter b',
-            'isort args: --check',
+            'isort args: --check --profile black',
             'pylint args: --msg-template="{path}:{msg}'
             ' ({msg_id}, {symbol}):{line}:{column}"',
             'radon cc args: --min D',
@@ -47,7 +47,7 @@ class TestConfig(TestCase):
         expected_lines = [
             '[yala]',
             'linters: linter b',
-            'isort args: --check',
+            'isort args: --check --profile black',
             'pylint args: --msg-template="{path}:{msg}'
             ' ({msg_id}, {symbol}):{line}:{column}"',
             'radon cc args: --min D',
