@@ -28,6 +28,7 @@ Currently supported Python tools:
 - `Pyflakes <https://pypi.org/project/pyflakes/>`_
 - `Pylint <http://pylint.pycqa.org/>`_
 - `Radon <https://radon.readthedocs.org/>`_
+- `Black <https://black.readthedocs.io/>`_
 
 
 Install
