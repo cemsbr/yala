@@ -174,15 +174,13 @@ class RadonMI(Linter):
 
 
 class Black(Linter):
-
     """Parser for black code formatter lint check."""
 
     name = 'black'
     command = 'black --check'
 
     def parse(self, stdout_lines, stderr_lines):
-        """
-        Parse linter stdout and stderr lines.
+        """Parse linter stdout and stderr lines.
 
         Expected error message:
 
