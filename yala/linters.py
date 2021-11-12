@@ -189,13 +189,9 @@ class Black(Linter):
         Oh no! 💥 💔 💥
         2 files would be reformatted.
         """
-        pattern = re.compile(r'''^.*?would\sreformat\s(?P<path>.+\.py)$''',
-                             re.VERBOSE | re.IGNORECASE)
+        pattern = re.compile(r'''^.*?(?P<msg>would\sreformat)\s
+                             (?P<path>.+\.py)$''', re.VERBOSE)
         return self._parse_by_pattern(stderr_lines, pattern), stdout_lines
-
-    def _create_output_from_match(self, match_result):
-        """Create output."""
-        return LinterOutput(self.name, match_result['path'], 'would reformat')
 
 
 #: dict: All Linter subclasses indexed by class name
