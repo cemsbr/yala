@@ -130,6 +130,20 @@ pycodestyle, and pylint that are installed by default):
    pylint args = --disable=C0114,C0115,C0116
 
 
+If you're using `black` with `isort`, `pycodestyle` and `flake8`, make sure to set options that won't conflict, for instance:
+
+.. code-block:: ini
+
+  [isort]
+  profile=black
+
+  [pycodestyle]
+  max-line-length = 88
+
+  [flake8]
+  max-line-length = 88
+
+
 Hacking: Adding a linter
 ------------------------
 Check the file *yala/linters.py* and feel free to ask for help.
