@@ -78,13 +78,11 @@ class TestAcceptance(TestCase):
 
     def test_mypy(self):
         """Check mypy output."""
-        expected = "4:None|error: Need type comment for 'untyped_list' " + \
-            '(hint: "untyped_list = ...  # type: List[<type>]")'
+        expected = '4:None|error: Need type annotation for "untyped_list"' + \
+            ' (hint: "untyped_list: List[<type>] = ...")'
         expected_py37 = '4:None|error: Need type annotation for ' + \
             '\'untyped_list\' (hint: "untyped_list: List[<type>] = ...")'
-        exp_expr = '4:None|error: Need type annotation for "untyped_list"' + \
-            ' (hint: "untyped_list: List[<type>] = ...")'
-        possible_results = expected, expected_py37, exp_expr
+        possible_results = expected, expected_py37
         self._assert_any_result(possible_results, 'mypy')
 
     def test_pycodestyle(self):
