@@ -9,8 +9,10 @@ script:
   - tox
 matrix:
   include:
+    - python: 3.9
+      env: TOXENV=py39,up_analysis
     - python: 3.8
-      env: TOXENV=py38,up_analysis
+      env: TOXENV=py38
     - python: 3.7
       env: TOXENV=py37
     - python: 3.6
