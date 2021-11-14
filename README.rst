@@ -143,8 +143,8 @@ Check the file *yala/linters.py* and feel free to ask for help.
 .. |codecov| image:: https://codecov.io/gh/cemsbr/yala/branch/master/graph/badge.svg
             :target: https://codecov.io/gh/cemsbr/yala
 
-.. |codacy| image:: https://api.codacy.com/project/badge/Grade/e435a65c5dd44ecf9369010b29616bd0
-           :target: https://www.codacy.com/app/cems/yala?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cemsbr/yala&amp;utm_campaign=Badge_Grade
+.. |codacy| image:: https://app.codacy.com/project/badge/Grade/30067434a90c41c097fdf83ce6a1b677
+           :target: https://www.codacy.com/gh/cemsbr/yala/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cemsbr/yala&amp;utm_campaign=Badge_Grade
 
 .. |issue_time| image:: http://isitmaintained.com/badge/resolution/cemsbr/yala.svg
                :target: http://isitmaintained.com/project/cemsbr/yala
