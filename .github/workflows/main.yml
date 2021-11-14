@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         # Without quotes, 3.10 becomes 3.1
-        python-version: [3.6, 3.7, 3.8, '3.10']
+        python-version: [3.9, 3.6, 3.7, 3.8, '3.10']
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -40,4 +40,7 @@ jobs:
       - name: Run tox
         run: tox
         env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           TOXENV: ${{ matrix.python-version }}
