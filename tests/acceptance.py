@@ -78,8 +78,8 @@ class TestAcceptance(TestCase):
 
     def test_mypy(self):
         """Check mypy output."""
-        expected = "4:None|error: Need type comment for 'untyped_list' " + \
-            '(hint: "untyped_list = ...  # type: List[<type>]")'
+        expected = '4:None|error: Need type annotation for "untyped_list" ' + \
+                '(hint: "untyped_list: List[<type>] = ...")'
         expected_py37 = '4:None|error: Need type annotation for ' + \
             '\'untyped_list\' (hint: "untyped_list: List[<type>] = ...")'
         possible_results = expected, expected_py37
@@ -115,8 +115,8 @@ class TestAcceptance(TestCase):
             '2:0|Unused import abc (W0611, unused-import)',
             '7:0|Too many branches (20/12) (R0912, too-many-branches)',
             '1:0|Similar lines in 2 files\n'
-            '==tests_data.duplicate1:3\n'
-            '==tests_data.duplicate2:3\n'
+            '==tests_data.duplicate1:[3:9]\n'
+            '==tests_data.duplicate2:[3:9]\n'
             'def dummy_function():\n'
             '    """Must have at least four lines."""\n'
             '    aaa = 0\n'
