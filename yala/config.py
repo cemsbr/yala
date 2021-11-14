@@ -51,7 +51,7 @@ class Config:
         print('linters:', ', '.join(sorted(linters)))
         for key, value in self._config.items():
             if key != 'linters':
-                print('{}: {}'.format(key, value))
+                print(f'{key}: {value}')
 
     def get_linter_classes(self):
         """Return linters to be executed."""

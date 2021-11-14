@@ -36,8 +36,8 @@ class LinterOutput:
 
     def __str__(self):
         """Output shown to the user."""
-        return '{}|{}:{}|{} [{}]'.format(self.path, self.line_nr, self.col,
-                                         self.msg, self._linter_name)
+        return f'{self.path}|{self.line_nr}:{self.col}|{self.msg} ' + \
+            f'[{self._linter_name}]'
 
     def _cmp_key(self, obj=None):
         """Comparison key for sorting results from all linters.

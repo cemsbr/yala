@@ -60,8 +60,8 @@ class LinterRunner:
         except FileNotFoundError as exception:
             # Error if the linter was not found but was chosen by the user
             if self._linter.name in self.config.user_linters:
-                error_msg = 'Could not find {}. Did you install it? ' \
-                    'Got exception: {}'.format(self._linter.name, exception)
+                error_msg = f'Could not find {self._linter.name}. ' + \
+                    f'Did you install it? Got exception: {exception}'
                 return [], [error_msg]
             # If the linter was not chosen by the user, do nothing
             return [], []
@@ -88,7 +88,7 @@ class LinterRunner:
                 for output in (process.stdout, process.stderr)]
 
     def _format_stderr(self, lines):
-        return ['[{}] {}'.format(self._linter.name, line) for line in lines]
+        return [f'[{self._linter.name}] {line}' for line in lines]
 
 
 class Main:
@@ -156,7 +156,7 @@ class Main:
         for line in stdout:
             print(line)
         issue = 'issues' if len(stdout) > 1 else 'issue'
-        sys.exit('\n:( {} {} found.'.format(len(stdout), issue))
+        sys.exit(f'\n:( {stdout} {issue} found.')
 
 
 def main():

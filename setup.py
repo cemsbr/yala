@@ -8,7 +8,7 @@ from yala import __version__
 HERE = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(HERE, 'README.rst')) as f:
+with open(path.join(HERE, 'README.rst'), encoding='ascii') as f:
     LONG_DESC = f.read()
 
 setup(

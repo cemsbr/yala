@@ -37,14 +37,14 @@ class TestAcceptance(TestCase):
 
     def _assert_result(self, result, linter_name):
         self.assertTrue(self._output_has_result(result, linter_name),
-                        'Couldn\'t match:\n{}\nOutput:\n{}'.format(
-                            result, self._output))
+                        f"Couldn't match:\n{result}\nOutput:\n{self._output}")
 
     def _assert_any_result(self, results, linter_name):
         first_result = any(self._output_has_result(r, linter_name)
                            for r in results)
-        self.assertTrue(first_result, 'None matched:\n{}\nOutput:\n{}'
-                        .format('\n'.join(results), self._output))
+        lines = '\n'.join(results)
+        self.assertTrue(first_result,
+                        f'None matched:\n{lines}\nOutput:\n{self._output}')
 
     def _output_has_result(self, result, linter_name):
         expected_regex = self._get_expected_regex(result, linter_name)
@@ -79,7 +79,7 @@ class TestAcceptance(TestCase):
     def test_mypy(self):
         """Check mypy output."""
         expected = '4:None|error: Need type annotation for "untyped_list" ' + \
-                '(hint: "untyped_list: List[<type>] = ...")'
+            '(hint: "untyped_list: List[<type>] = ...")'
         expected_py37 = '4:None|error: Need type annotation for ' + \
             '\'untyped_list\' (hint: "untyped_list: List[<type>] = ...")'
         possible_results = expected, expected_py37
