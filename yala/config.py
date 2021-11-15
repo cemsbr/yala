@@ -16,9 +16,9 @@ class Config:
 
     _config = None
 
-    _CFG_FILE = 'setup.cfg'
+    _CFG_FILE = "setup.cfg"
     #: str: Section of the config file.
-    _CFG_SECTION = 'yala'
+    _CFG_SECTION = "yala"
 
     def __init__(self, all_linters):
         """Read default and user config files.
@@ -32,26 +32,26 @@ class Config:
         user_cfg = self._read_user_files()
         self._config = self._merge(default_cfg, user_cfg)
         self.user_linters = []  # chosen by the user
-        self.linters = {}       # chosen by the user or all of them
+        self.linters = {}  # chosen by the user or all of them
         self._set_linters()
 
     def _set_linters(self):
         """Use user-specified linters or all of them when not specified."""
-        if 'linters' in self._config:
+        if "linters" in self._config:
             self.user_linters = list(self._parse_cfg_linters())
             self.linters = {linter: self._all_linters[linter]
-                            for linter in self.user_linters}
+                            for linter in self.user_linters}  # fmt: skip
         else:
             self.linters = self._all_linters
 
     def print_config(self):
         """Print all yala configurations, including default and user's."""
         linters = self.user_linters or list(self.linters)
-        print('[yala]')
-        print('linters:', ', '.join(sorted(linters)))
+        print("[yala]")
+        print("linters:", ", ".join(sorted(linters)))
         for key, value in self._config.items():
-            if key != 'linters':
-                print(f'{key}: {value}')
+            if key != "linters":
+                print(f"{key}: {value}")
 
     def get_linter_classes(self):
         """Return linters to be executed."""
@@ -59,25 +59,25 @@ class Config:
 
     def _parse_cfg_linters(self):
         """Return valid linter names found in config files."""
-        user_value = self._config.get('linters', '')
+        user_value = self._config.get("linters", "")
         # For each line of "linters" value, use comma as separator
         for line in user_value.splitlines():
             yield from self._parse_linters_line(line)
 
     def _parse_linters_line(self, line):
-        linters = (linter for linter in re.split(r'\s*,\s*', line))
+        linters = (linter for linter in re.split(r"\s*,\s*", line))
         for linter in linters:
             if linter in self._all_linters:
                 yield linter
             elif linter:
-                LOG.warning('%s is not a valid linter', linter)
+                LOG.warning("%s is not a valid linter", linter)
 
     def get_linter_config(self, name):
         """Return linter options without linter name prefix."""
-        prefix = name + ' '
+        prefix = name + " "
         return {k[len(prefix):]: v
                 for k, v in self._config.items()
-                if k.startswith(prefix)}
+                if k.startswith(prefix)}  # fmt: skip
 
     @classmethod
     def _read_default_file(cls):
@@ -97,7 +97,7 @@ class Config:
         # Reverse order so parent folder's file is overridden.
         for user_file in reversed(user_files):
             if user_file.is_file():
-                LOG.debug('Reading %s', user_file)
+                LOG.debug("Reading %s", user_file)
                 user_cfg.read(str(user_file))
         return user_cfg
 
@@ -113,7 +113,7 @@ class Config:
         user = user[section]
         for key, value in user.items():
             if key in merged:
-                merged[key] += ' ' + value
+                merged[key] += " " + value
             else:
                 merged[key] = value
         return merged

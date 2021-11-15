@@ -60,35 +60,43 @@ class LinterRunner:
         except FileNotFoundError as exception:
             # Error if the linter was not found but was chosen by the user
             if self._linter.name in self.config.user_linters:
-                error_msg = f'Could not find {self._linter.name}. ' + \
-                    f'Did you install it? Got exception: {exception}'
+                error_msg = (
+                    f"Could not find {self._linter.name}. "
+                    f"Did you install it? Got exception: {exception}"
+                )
                 return [], [error_msg]
             # If the linter was not chosen by the user, do nothing
             return [], []
 
     def _get_command(self):
         """Return command with options and targets, ready for execution."""
-        targets = ' '.join(self.targets)
-        cmd_str = self._linter.command_with_options + ' ' + targets
+        targets = " ".join(self.targets)
+        cmd_str = self._linter.command_with_options + " " + targets
         cmd_shlex = shlex.split(cmd_str)
         return list(cmd_shlex)
 
     def _lint(self):
         """Run linter in a subprocess."""
         command = self._get_command()
-        process = subprocess.run(command, stdout=subprocess.PIPE,  # nosec
-                                 stderr=subprocess.PIPE, check=False)
-        LOG.info('Finished %s', self._linter.name)
+        process = subprocess.run(  # nosec
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        LOG.info("Finished %s", self._linter.name)
         stdout, stderr = self._get_output_lines(process)
         return self._linter.parse(stdout, stderr)
 
     @staticmethod
     def _get_output_lines(process):
-        return [(line for line in output.decode('utf-8').splitlines() if line)
-                for output in (process.stdout, process.stderr)]
+        return [
+            (line for line in output.decode("utf-8").splitlines() if line)
+            for output in (process.stdout, process.stderr)
+        ]
 
     def _format_stderr(self, lines):
-        return [f'[{self._linter.name}] {line}' for line in lines]
+        return [f"[{self._linter.name}] {line}" for line in lines]
 
 
 class Main:
@@ -119,12 +127,14 @@ class Main:
         LinterRunner.targets = targets
         linters = self._config.get_linter_classes()
         with Pool() as pool:
-            linter_cfg_tgts = ((linter, self._config, targets)
-                               for linter in linters)
+            linter_cfg_tgts = (
+                (linter, self._config, targets)
+                for linter in linters
+            )  # fmt: skip
             linters_out_err = pool.map(LinterRunner.run, linter_cfg_tgts)
         stdouts, stderrs = zip(*linters_out_err)
         return (sorted(chain.from_iterable(stdouts)),
-                chain.from_iterable(stderrs))
+                chain.from_iterable(stderrs))  # fmt: skip
 
     def run_from_cli(self, args):
         """Read arguments, run and print results.
@@ -133,10 +143,10 @@ class Main:
             args (dict): Arguments parsed by docopt.
 
         """
-        if args['--dump-config']:
+        if args["--dump-config"]:
             self._config.print_config()
         else:
-            stdout, stderr = self.lint(args['<path>'])
+            stdout, stderr = self.lint(args["<path>"])
             self.print_results(stdout, stderr)
 
     @classmethod
@@ -149,14 +159,14 @@ class Main:
                 print(file=sys.stderr)
             cls._print_stdout(stdout)
         else:
-            print(':) No issues found.')
+            print(":) No issues found.")
 
     @staticmethod
     def _print_stdout(stdout):
         for line in stdout:
             print(line)
-        issue = 'issues' if len(stdout) > 1 else 'issue'
-        sys.exit(f'\n:( {stdout} {issue} found.')
+        issue = "issues" if len(stdout) > 1 else "issue"
+        sys.exit(f"\n:( {stdout} {issue} found.")
 
 
 def main():

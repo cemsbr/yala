@@ -36,8 +36,10 @@ class LinterOutput:
 
     def __str__(self):
         """Output shown to the user."""
-        return f'{self.path}|{self.line_nr}:{self.col}|{self.msg} ' + \
-            f'[{self._linter_name}]'
+        return (
+            f"{self.path}|{self.line_nr}:{self.col}|{self.msg} "
+            f"[{self._linter_name}]"
+        )
 
     def _cmp_key(self, obj=None):
         """Comparison key for sorting results from all linters.
@@ -84,8 +86,8 @@ class Linter(metaclass=ABCMeta):
     @property
     def command_with_options(self):
         """Add arguments from config to :attr:`command`."""
-        if 'args' in self.config:
-            return ' '.join((self.command, self.config['args']))
+        if "args" in self.config:
+            return " ".join((self.command, self.config["args"]))
         return self.command
 
     @abstractmethod
@@ -107,8 +109,12 @@ class Linter(metaclass=ABCMeta):
         try:
             rel_path = Path(full_path).relative_to(Path().absolute())
         except ValueError:
-            LOG.error("%s: Couldn't find relative path of '%s' from '%s'.",
-                      self.name, full_path, Path().absolute())
+            LOG.error(
+                "%s: Couldn't find relative path of '%s' from '%s'.",
+                self.name,
+                full_path,
+                Path().absolute(),
+            )
             return full_path
         return str(rel_path)
 
@@ -128,18 +134,18 @@ class Linter(metaclass=ABCMeta):
             generator: LinterOutput instances.
 
         """
-        buffer = ''  # lines is an iterable, but there may be multiline matches
+        buffer = ""  # lines is an iterable, but there may be multiline matches
         for line in lines:
             buffer += line
             match = pattern.match(buffer)
             if match:
-                buffer = ''  # clear buffer after a match
+                buffer = ""  # clear buffer after a match
                 params = match.groupdict()
                 if not params:
                     params = match.groups()
                 yield self._create_output_from_match(params)
             else:
-                buffer += '\n'  # keep lines separated by a newline
+                buffer += "\n"  # keep lines separated by a newline
 
     def _create_output_from_match(self, match_result):
         """Create LinterOutput instance from pattern match results.
