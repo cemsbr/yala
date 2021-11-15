@@ -61,6 +61,13 @@ class TestConfig(TestCase):
             expected_lines, mock_stdout.getvalue().splitlines()
         )
 
+    def test_ignore_unknown_linter(self):
+        """Test whether unknown linter is ignored."""
+        all_linters = {"linter a": "LinterA"}
+        user_config = {"linters": "invalid-linter"}
+        config = self._get_config(all_linters, user_config)
+        self.assertNotIn("invalid-linter", config.linters)
+
     @classmethod
     def _get_config(cls, all_linters=None, user_cfg=None, default_cfg=None):
         """Return real config with mocked ConfigParser."""
