@@ -46,6 +46,7 @@ setup(
     ],
     extras_require={
         'all': [
+            'black',
             'mypy',
             'pydocstyle',
             'pyflakes',
@@ -57,6 +58,7 @@ setup(
         'pyflakes': ['pyflakes'],
         'pylint': ['pylint'],
         'radon': ['radon'],
+        'black': ['black'],
         'dev': [
             'bandit',
             'coverage',

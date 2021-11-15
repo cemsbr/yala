@@ -28,6 +28,7 @@ Currently supported Python tools:
 - `Pyflakes <https://pypi.org/project/pyflakes/>`_
 - `Pylint <http://pylint.pycqa.org/>`_
 - `Radon <https://radon.readthedocs.org/>`_
+- `Black <https://black.readthedocs.io/>`_
 
 
 Install
@@ -127,6 +128,20 @@ pycodestyle, and pylint that are installed by default):
 
    [yala]
    pylint args = --disable=C0114,C0115,C0116
+
+
+If you're using `black` with `isort`, `pycodestyle` and `flake8`, make sure to set options that won't conflict, for instance:
+
+.. code-block:: ini
+
+  [isort]
+  profile=black
+
+  [pycodestyle]
+  max-line-length = 88
+
+  [flake8]
+  max-line-length = 88
 
 
 Hacking: Adding a linter

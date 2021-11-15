@@ -130,3 +130,8 @@ class TestAcceptance(TestCase):
         """Check radon cc ouput."""
         expected = '7:0|high_complexity - D'
         self._assert_result(expected, 'radon cc')
+
+    def test_black(self):
+        """Check black --check ouput."""
+        expected = 'None:None|would reformat'
+        self._assert_result(expected, 'black')

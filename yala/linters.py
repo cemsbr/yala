@@ -173,5 +173,26 @@ class RadonMI(Linter):
         return self._parse_by_pattern(stdout_lines, pattern), stderr_lines
 
 
+class Black(Linter):
+    """Parser for black code formatter lint check."""
+
+    name = 'black'
+    command = 'black --check'
+
+    def parse(self, stdout_lines, stderr_lines):
+        """Parse linter stdout and stderr lines.
+
+        Expected error message:
+
+        would reformat file1.py
+        would reformat file2.py
+        Oh no! 💥 💔 💥
+        2 files would be reformatted.
+        """
+        pattern = re.compile(r'''^.*?(?P<msg>would\sreformat)\s
+                             (?P<path>.+\.py)$''', re.VERBOSE)
+        return self._parse_by_pattern(stderr_lines, pattern), stdout_lines
+
+
 #: dict: All Linter subclasses indexed by class name
 LINTERS = {cls.name: cls for cls in Linter.__subclasses__()}
