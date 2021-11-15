@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.0] - 2021-11-15
+### Added
+- Black Friday is near, so we added Black support! :) Thank you, @viniarck.
+
+### Changed
+- Using GitHub actions instead of travis-ci.
+
 ## [3.0.0] - 2020-10-23
 ## Changed
 - Pylint's duplicate-code is not disabled anymore, since its parser has multi-line support.
@@ -60,7 +67,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Unused code to parse pyflakes and radon
 - dev: dependency management via requirements file (use pipenv)
 
-[Unreleased]: https://github.com/cemsbr/yala/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/cemsbr/yala/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/cemsbr/yala/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/cemsbr/yala/compare/v2.2.1...v3.0.0
 [2.2.1]: https://github.com/cemsbr/yala/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/cemsbr/yala/compare/v2.1.0...v2.2.0
