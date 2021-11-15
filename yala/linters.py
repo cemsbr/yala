@@ -143,7 +143,7 @@ class Pylint(Linter):
                 .*?^(?P<path>[^\n]+?)
                 :(?P<msg>.+)
                 :(?P<line_nr>\d+?)
-                :(?P<col>\d+?)$,
+                :(?P<col>\d+?)$
             """,
             re.X | re.M | re.S,
         )

@@ -166,7 +166,7 @@ class Main:
         for line in stdout:
             print(line)
         issue = "issues" if len(stdout) > 1 else "issue"
-        sys.exit(f"\n:( {stdout} {issue} found.")
+        sys.exit(f"\n:( {len(stdout)} {issue} found.")
 
 
 def main():
