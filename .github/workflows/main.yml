@@ -32,7 +32,7 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.local/share/virtualenv
-          key: ${{ matrix.python-version }}-${{ hashFiles('Pipfile.lock') }}
+          key: ${{ matrix.python-version }}-${{ hashFiles('Pipfile.lock', 'tox.ini') }}
 
       - name: Install tox
         run: pip install -U tox

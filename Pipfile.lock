@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "63ca0406db7dae2cd36228918da5deb3f7ef568bc18961da070bc6bdbd0626a1"
+            "sha256": "47ac660f2c3d5996879bf4a095d1209c208a0cebc1e6a423e49f49f558222d60"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -272,11 +272,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:899d27ec8104a68d4ba813b1afd66708a1a10e9391e79be92c8c60f9c77d05e5",
-                "sha256:dedb38ba61844d9df36072dad313cb79426fd50497aaac9c0da4cd50dbeeb110"
+                "sha256:03d8ad01799a10c6e867ff105fdd11335712be79a1b29d47d1d3b00132e78d5f",
+                "sha256:17b9c0f82402081585e0a99343b563efa5eb2d0b958a172e1aa2c515fa47425b"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==59.0.1"
+            "version": "==59.1.0"
         },
         "six": {
             "hashes": [
@@ -376,6 +376,7 @@
         "yala": {
             "extras": [
                 "all",
+                "black",
                 "flake8"
             ],
             "path": ".",
@@ -885,11 +886,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:899d27ec8104a68d4ba813b1afd66708a1a10e9391e79be92c8c60f9c77d05e5",
-                "sha256:dedb38ba61844d9df36072dad313cb79426fd50497aaac9c0da4cd50dbeeb110"
+                "sha256:03d8ad01799a10c6e867ff105fdd11335712be79a1b29d47d1d3b00132e78d5f",
+                "sha256:17b9c0f82402081585e0a99343b563efa5eb2d0b958a172e1aa2c515fa47425b"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==59.0.1"
+            "version": "==59.1.0"
         },
         "six": {
             "hashes": [
@@ -1029,6 +1030,7 @@
         "yala": {
             "extras": [
                 "all",
+                "black",
                 "flake8"
             ],
             "path": ".",

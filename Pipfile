@@ -4,10 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-yala = {extras = ["all", "flake8"], path = "."}
+yala = {extras = ["all", "black", "flake8"], path = "."}
 
 [dev-packages]
-yala = {editable = true, extras = ["all", "dev", "flake8"], path = "."}
+yala = {editable = true, extras = ["all", "black", "dev", "flake8"], path = "."}
 
 [requires]
 python_version = "3.9"

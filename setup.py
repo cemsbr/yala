@@ -44,7 +44,6 @@ setup(
     ],
     extras_require={
         "all": [
-            "black",
             "mypy",
             "pydocstyle",
             "pyflakes",
