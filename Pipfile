@@ -10,4 +10,4 @@ yala = {extras = ["all", "black", "flake8"], path = "."}
 yala = {editable = true, extras = ["all", "black", "dev", "flake8"], path = "."}
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"
