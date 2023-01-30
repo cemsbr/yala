@@ -10,7 +10,6 @@ class LinterOutput:
     """A one-line linter result. It can be sorted and printed as string."""
 
     # We only override magic methods.
-    # pylint: disable=too-few-public-methods
 
     def __init__(self, linter_name, path, msg, line_nr=None, col=None):
         """Optionally set all attributes.
