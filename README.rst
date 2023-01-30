@@ -149,8 +149,8 @@ Hacking: Adding a linter
 Check the file *yala/linters.py* and feel free to ask for help.
 
 
-.. |build| image:: https://travis-ci.org/cemsbr/yala.svg?branch=master
-          :target: https://travis-ci.org/cemsbr/yala
+.. |build| image:: https://github.com/cemsbr/yala/actions/workflows/main.yml/badge.svg?branch=master
+          :target: https://github.com/cemsbr/yala/actions
 
 .. |coveralls| image:: https://coveralls.io/repos/github/cemsbr/yala/badge.svg?branch=master
               :target: https://coveralls.io/github/cemsbr/yala?branch=master
