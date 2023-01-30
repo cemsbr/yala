@@ -2,7 +2,7 @@
 import logging.config
 from pathlib import Path
 
-__version__ = "3.1.0"
+__version__ = "3.2.0"
 
 CONFIG_PATH = Path(__file__).parent / "logging.ini"
 # The file is from this package, so we ignore the issue after checking our

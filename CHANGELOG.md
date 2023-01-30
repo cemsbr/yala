@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.2.0] - 2023-01-30
+### Added
+- Github actions for automated testing.
+
+### Fixed
+- Updated parser for newer Pyflakes versions;
+- Updated tests for changes in duplication rule of Pylint.
+
+### Removed
+- Support for Python 3.6 (EOL).
+
 ## [3.1.0] - 2021-11-15
 ### Added
 - Black Friday is near, so we added Black support! :) Thank you, @viniarck.
@@ -67,7 +78,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Unused code to parse pyflakes and radon
 - dev: dependency management via requirements file (use pipenv)
 
-[Unreleased]: https://github.com/cemsbr/yala/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/cemsbr/yala/compare/v3.2.0...HEAD
+[3.2.0]: https://github.com/cemsbr/yala/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/cemsbr/yala/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/cemsbr/yala/compare/v2.2.1...v3.0.0
 [2.2.1]: https://github.com/cemsbr/yala/compare/v2.2.0...v2.2.1
