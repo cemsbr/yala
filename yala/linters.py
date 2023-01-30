@@ -124,7 +124,7 @@ class Pyflakes(Linter):
                 ^(?P<path>.+?)
                 :(?P<line_nr>\d+?)
                 :(?P<col>\d+?)?
-                \ (?P<msg>.+)$
+                :\ (?P<msg>.+)$
             """,
             re.VERBOSE,
         )

@@ -68,11 +68,8 @@ class Linter(metaclass=ABCMeta):
     #: dict: Configuration for a specific linter
     config = None
 
-    @property
-    @classmethod
-    @abstractmethod
-    def name(cls):
-        """Name of this linter. Recommended to be the same as its command."""
+    #: str: Name of this linter. Recommended to be the same as its command.
+    name = ""
 
     @property
     def command(self):
