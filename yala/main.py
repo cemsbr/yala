@@ -103,7 +103,6 @@ class Main:
     """Parse all linters and aggregate results."""
 
     # We only need the ``run`` method.
-    # pylint: disable=too-few-public-methods
 
     def __init__(self, config=None, all_linters=None):
         """Initialize the only Config object and assign it to other classes.

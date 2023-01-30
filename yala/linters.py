@@ -1,6 +1,5 @@
 """Module for linters."""
 # The less we need to code, the better!
-# pylint: disable=too-few-public-methods
 import re
 
 from .base import Linter, LinterOutput
