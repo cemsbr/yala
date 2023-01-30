@@ -6,4 +6,5 @@ def dummy_function():
     aaa = 0
     bbb = 1
     ccc = 2
-    print(aaa + bbb + ccc)
+    ddd = 3
+    print(aaa + bbb + ccc + ddd)

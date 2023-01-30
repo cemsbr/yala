@@ -33,7 +33,7 @@ class LinterRunner:
     """Run linter and process results."""
 
     config = None
-    targets = []  # type: List[str]
+    targets: List[str] = []
 
     def __init__(self, linter_class):
         """Set linter class and its configuration."""

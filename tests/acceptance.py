@@ -56,7 +56,7 @@ class TestAcceptance(TestCase):
     @staticmethod
     def _get_expected_regex(line, linter_name):
         """Return a regex to match both Linux and Windows paths."""
-        regex = r".*?^tests_data[/\\].*.py\|{} \[{}\]$"
+        regex = r".*?^tests_data[/\\].*?\.py\|{} \[{}\]$"
         escaped_output = re.escape(line)
         return regex.format(escaped_output, linter_name)
 
@@ -83,7 +83,8 @@ class TestAcceptance(TestCase):
         """Check mypy output."""
         expected = (
             '4:None|error: Need type annotation for "untyped_list" '
-            '(hint: "untyped_list: List[<type>] = ...")'
+            '(hint: "untyped_list: List[<type>] = ...")  '
+            "[var-annotated]"
         )
         expected_py37 = (
             "4:None|error: Need type annotation for "
@@ -124,14 +125,13 @@ class TestAcceptance(TestCase):
             "2:0|Unused import abc (W0611, unused-import)",
             "7:0|Too many branches (20/12) (R0912, too-many-branches)",
             "1:0|Similar lines in 2 files\n"
-            "==tests_data.duplicate1:[3:9]\n"
-            "==tests_data.duplicate2:[3:9]\n"
-            "def dummy_function():\n"
-            '    """Must have at least four lines."""\n'
+            "==duplicate1:[5:10]\n"
+            "==duplicate2:[5:10]\n"
             "    aaa = 0\n"
             "    bbb = 1\n"
             "    ccc = 2\n"
-            "    print(aaa + bbb + ccc) (R0801, duplicate-code)",
+            "    ddd = 3\n"
+            "    print(aaa + bbb + ccc + ddd) (R0801, duplicate-code)",
         )
         self._assert_results(expected, "pylint")
 
